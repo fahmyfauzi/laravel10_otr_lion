@@ -199,7 +199,7 @@
                                                 <!-- card_no -->
                                                 <div class="col-md-5 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="number" name="card_no" class="form-control"
+                                                        <input type="text" name="card_no" class="form-control"
                                                             id="card_no" placeholder="card_no" required>
                                                         <label for="card_no">Card No.</label>
                                                     </div>

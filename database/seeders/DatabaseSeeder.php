@@ -15,8 +15,21 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Applicant',
+            'email' => 'aplicant@example.com',
+            'role' => 'applicant',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'PIC Coordinator',
+            'email' => 'pic_coordinator@example.com',
+            'role' => 'pic_coordinator',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Quality Inspector',
+            'email' => 'quality_inspector@example.com',
+            'role' => 'quality_inspector',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
     }

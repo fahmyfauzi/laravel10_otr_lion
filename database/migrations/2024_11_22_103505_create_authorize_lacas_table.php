@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('authorize_lacas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->enum('role', ["applicant", "pic_coordinator", "quality_inspector"])->default('applicant');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->date('authorization_date');
+            $table->string('type');
+            $table->string('no');
+            $table->string('validy');
+            $table->boolean('mr')->default(false);
+            $table->boolean('rii')->default(false);
+            $table->boolean('etops')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('authorize_lacas');
     }
 };

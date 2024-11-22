@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('ame_licenses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('otr_application_id')->constrained('otr_applications')->onDelete('cascade');
             $table->string('vut');
             $table->string('license_no');
             $table->timestamps();

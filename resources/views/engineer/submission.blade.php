@@ -6,6 +6,15 @@
     <div class="container">
         <form action="{{ route('submission.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            @if (session('error'))
+                @component('components.alert', ['type' => 'danger', 'message' => session('error')])
+                @endcomponent
+            @endif
+            @if ($errors->any())
+                @component('components.alert', ['type' => 'danger', 'message' => $errors->first()])
+                @endcomponent
+            @endif
             <div class="row g-4">
                 <!-- Biodata -->
                 <div class="col-md-8">
@@ -21,54 +30,95 @@
                             <span id="placeholderText">Click to upload an image</span>
 
                             <!-- File Input (Hidden) -->
-                            <input class="form-control d-none" type="file" id="formFile" accept="image/*">
+                            <input class="form-control d-none" name="photo" type="file" id="formFile"
+                                accept="image/*">
                         </div>
                         <div class="w-100">
                             <div class="mb-3 row">
                                 <label for="name" class="col-sm-4 col-form-label">Name</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="name" id="name"
-                                        placeholder="Input your name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" id="name" placeholder="Input your name"
+                                        value="{{ old('name') }}">
+
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
+
                             </div>
                             <div class="mb-3 row">
                                 <label for="place_of_birth" class="col-sm-4 col-form-label">Place / Date of Birth</label>
                                 <div class="col-sm-8">
                                     <div class="d-flex flex-wrap gap-2">
-                                        <input type="text" class="form-control" name="place_of_birth" id="place_of_birth"
-                                            placeholder="Input your place of birth">
-                                        <input type="date" class="form-control" name="date_of_birth">
+                                        <input type="text"
+                                            class="form-control @error('place_of_birth') is-invalid @enderror"
+                                            name="place_of_birth" id="place_of_birth"
+                                            placeholder="Input your place of birth" value="{{ old('place_of_birth') }}">
+                                        @error('place_of_birth')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
+                                        <input type="date"
+                                            class="form-control @error('date_of_birth') is-invalid @enderror"
+                                            name="date_of_birth" value="{{ old('date_of_birth') }}">
+                                        @error('date_of_birth')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
+
                             <div class="mb-3 row">
                                 <label for="address" class="col-sm-4 col-form-label">Address</label>
                                 <div class="col-sm-8">
-                                    <textarea name="address" id="address" class="form-control" placeholder="Input your address"></textarea>
+                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror"
+                                        placeholder="Input your address">{{ old('address') }}</textarea>
+                                    @error('address')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="mb-3 row">
                                 <label for="phone" class="col-sm-4 col-form-label">Phone</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="phone" id="phone"
-                                        placeholder="Input your phone">
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                        name="phone" id="phone" placeholder="Input your phone"
+                                        value="{{ old('phone') }}">
+                                    @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="mb-3 row">
-                                <label for="company_id_no" class="col-sm-4 col-form-label">Company ID No.</label>
+                                <label for="company_no_id" class="col-sm-4 col-form-label">Company ID No.</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="company_id_no" id="company_id_no"
-                                        placeholder="Input your company ID no.">
+                                    <input type="text" class="form-control @error('company_no_id') is-invalid @enderror"
+                                        name="company_no_id" id="company_no_id" placeholder="Input your company ID no."
+                                        value="{{ old('company_no_id') }}">
+                                    @error('company_no_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="mb-3 row">
                                 <label for="last_formal_education" class="col-sm-4 col-form-label">Last Formal
                                     Education</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_formal_education"
-                                        id="last_formal_education" placeholder="Input your last formal education">
+                                    <input type="text"
+                                        class="form-control @error('last_formal_education') is-invalid @enderror"
+                                        name="last_formal_education" id="last_formal_education"
+                                        placeholder="Input your last formal education"
+                                        value="{{ old('last_formal_education') }}">
+                                    @error('last_formal_education')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -78,51 +128,75 @@
                     <h3>Authorization LACA</h3>
                     <div class="d-flex flex-wrap gap-3 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="initial" name="laca_type">
+                            <input class="form-check-input " type="radio" id="initial" name="type" value="initial">
                             <label class="form-check-label" for="initial">Initial</label>
+
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="additional" name="laca_type">
+                            <input class="form-check-input" type="radio" id="additional" name="type"
+                                value="additional">
                             <label class="form-check-label" for="additional">Additional</label>
+
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="renewal" name="laca_type">
+                            <input class="form-check-input " type="radio" id="renewal" name="type"
+                                value="renewal">
                             <label class="form-check-label" for="renewal">Renewal</label>
                         </div>
+                        @error('type')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="mb-3 row">
                         <label for="no" class="col-sm-4 col-form-label">No.</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="no" id="no"
-                                placeholder="Input your no">
+                            <input type="text" class="form-control @error('no') is-invalid @enderror" name="no"
+                                id="no" placeholder="Input your laca no" value="{{ old('no') }}">
+                            @error('no')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
+
                     <div class="mb-3 row">
                         <label for="validy" class="col-sm-4 col-form-label">Validy</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="validy" id="validy"
-                                placeholder="Input your validity">
+                            <input type="text" class="form-control @error('validy') is-invalid @enderror"
+                                name="validy" id="validy" placeholder="Input your validity"
+                                value="{{ old('validy') }}">
+                            @error('validy')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
+
                     <div class="mb-3 row">
                         <label for="scope" class="col-sm-4 col-form-label">Scope</label>
-                        <div class="col-sm-8 align-items-center d-flex">
-                            <div class="d-flex flex-wrap gap-3 ">
+                        <div class="col-sm-8 align-items-center ">
+                            <div class="d-flex flex-wrap gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="mr" value="MR">
+                                    <input class="form-check-input " type="checkbox" id="mr" name="mr"
+                                        value="1">
                                     <label class="form-check-label" for="mr">MR</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rii" value="RII">
+                                    <input class="form-check-input " type="checkbox" id="rii" name="rii"
+                                        value="1">
                                     <label class="form-check-label" for="rii">RII</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="etops" value="ETOPS">
+                                    <input class="form-check-input " type="checkbox" id="etops" name="etops"
+                                        value="1">
                                     <label class="form-check-label" for="etops">ETOPS</label>
                                 </div>
                             </div>
+
+                            <span class="text-danger">please choose one</span>
+
                         </div>
                     </div>
+
                 </div>
 
                 <!-- TYPE OF RATING TRAINING &  -->
@@ -136,22 +210,32 @@
                                 <div class="form-group">
                                     <div data-repeater-list="type_of_rating_training">
                                         <!-- Item Template -->
-                                        <div data-repeater-item class=" mb-2  rounded">
+                                        <div data-repeater-item class="mb-2 rounded">
                                             <div class="row align-items-center">
                                                 <!-- Course -->
                                                 <div class="col-md-7 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="text" name="course" class="form-control "
-                                                            id="course" placeholder="Input your course" required>
+                                                        <input type="text" name="course"
+                                                            class="form-control @error('type_of_rating_training.*.course') is-invalid @enderror"
+                                                            id="course" placeholder="Input your course"
+                                                            value="{{ old('type_of_rating_training.0.course') }}">
                                                         <label for="course">Course</label>
+                                                        @error('type_of_rating_training.*.course')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <!-- Year -->
                                                 <div class="col-md-3 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="number" name="year" class="form-control"
-                                                            id="year" placeholder="Year" required>
+                                                        <input type="number" name="year"
+                                                            class="form-control @error('type_of_rating_training.*.year') is-invalid @enderror"
+                                                            id="year" placeholder="Year"
+                                                            value="{{ old('type_of_rating_training.0.year') }}">
                                                         <label for="year">Year</label>
+                                                        @error('type_of_rating_training.*.year')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <!-- Delete Button -->
@@ -175,6 +259,7 @@
                                     </button>
                                 </div>
                             </div>
+
                             <!-- End Repeater Section -->
                         </div>
 
@@ -186,22 +271,32 @@
                                 <div class="form-group">
                                     <div data-repeater-list="basic_license">
                                         <!-- Item Template -->
-                                        <div data-repeater-item class=" mb-2  rounded">
+                                        <div data-repeater-item class="mb-2 rounded">
                                             <div class="row align-items-center">
                                                 <!-- category -->
                                                 <div class="col-md-5 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="text" name="category" class="form-control"
-                                                            id="category" placeholder="Input your category" required>
+                                                        <input type="text" name="category"
+                                                            class="form-control @error('basic_license.*.category') is-invalid @enderror"
+                                                            id="category" placeholder="Input your category"
+                                                            value="{{ old('basic_license.0.category') }}">
                                                         <label for="category">Category</label>
+                                                        @error('basic_license.*.category')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <!-- card_no -->
                                                 <div class="col-md-5 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="text" name="card_no" class="form-control"
-                                                            id="card_no" placeholder="card_no" required>
+                                                        <input type="text" name="card_no"
+                                                            class="form-control @error('basic_license.*.card_no') is-invalid @enderror"
+                                                            id="card_no" placeholder="Card No."
+                                                            value="{{ old('basic_license.0.card_no') }}">
                                                         <label for="card_no">Card No.</label>
+                                                        @error('basic_license.*.card_no')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <!-- Delete Button -->
@@ -225,6 +320,7 @@
                                     </button>
                                 </div>
                             </div>
+
                             <!-- End Repeater Section -->
                         </div>
                     </div>
@@ -235,63 +331,96 @@
                         <div class="col-md-6">
                             <h3>AME LICENSE</h3>
                             <div class="mb-3 row">
-                                <label for="ame_license_no" class="col-sm-4 col-form-label">AME LICENSE No.</label>
+                                <label for="license_no" class="col-sm-4 col-form-label">AME LICENSE No.</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="ame_license_no" id="ame_license_no"
-                                        placeholder="Input your ame license no">
+                                    <input type="text" class="form-control @error('license_no') is-invalid @enderror"
+                                        name="license_no" id="license_no" placeholder="Input your ame license no"
+                                        value="{{ old('license_no') }}">
+                                    @error('license_no')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="v_u_t" class="col-sm-4 col-form-label">V.U.T</label>
+                                <label for="vut" class="col-sm-4 col-form-label">V.U.T</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="v_u_t" id="v_u_t"
-                                        placeholder="Input your ame license v.u.t">
+                                    <input type="text" class="form-control @error('vut') is-invalid @enderror"
+                                        name="vut" id="vut" placeholder="Input your ame license v.u.t"
+                                        value="{{ old('vut') }}">
+                                    @error('vut')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <h3>Mandatory Training</h3>
                             <div class="mb-3 row">
-                                <label for="last_performed_hft" class="col-sm-4 col-form-label">Human Factor
+                                <label for="human_factory" class="col-sm-4 col-form-label">Human Factor
                                     Training</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_performed_hft"
-                                        id="last_performed_hft" placeholder="Input your human factor training">
+                                    <input type="text"
+                                        class="form-control @error('human_factory') is-invalid @enderror"
+                                        name="human_factory" id="human_factory"
+                                        placeholder="Input your last performed year" value="{{ old('human_factory') }}">
+                                    @error('human_factory')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="last_performed_smstraining" class="col-sm-4 col-form-label">SMS
+                                <label for="sms_training" class="col-sm-4 col-form-label">SMS
                                     TRAINING</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_performed_smstraining"
-                                        id="last_performed_smstraining" placeholder="Input your sms training">
+                                    <input type="text"
+                                        class="form-control @error('sms_training') is-invalid @enderror"
+                                        name="sms_training" id="sms_training"
+                                        placeholder="Input your last performed year" value="{{ old('sms_training') }}">
+                                    @error('sms_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="last_performed_rvsm_pbn_trainig" class="col-sm-4 col-form-label">RVSM PBN
+                                <label for="rvsm_pbn_training" class="col-sm-4 col-form-label">RVSM PBN
                                     TRAINING</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_performed_rvsm_pbn_trainig"
-                                        id="last_performed_rvsm_pbn_trainig" placeholder="Input your sms training">
+                                    <input type="text"
+                                        class="form-control @error('rvsm_pbn_training') is-invalid @enderror"
+                                        name="rvsm_pbn_training" id="rvsm_pbn_training"
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('rvsm_pbn_training') }}">
+                                    @error('rvsm_pbn_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="last_performed_etops_training" class="col-sm-4 col-form-label">ETOPS TRAING
-                                    (only
-                                    for applicant for A/C type effective ETOPS)</label>
+                                <label for="etops_training" class="col-sm-4 col-form-label">ETOPS TRAINING
+                                    (only for applicant for A/C type effective ETOPS)</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_performed_etops_training"
-                                        id="last_performed_etops_training" placeholder="Input your etops training">
+                                    <input type="text"
+                                        class="form-control @error('etops_training') is-invalid @enderror"
+                                        name="etops_training" id="etops_training"
+                                        placeholder="Input your last performed year" value="{{ old('etops_training') }}">
+                                    @error('etops_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="last_performed_rii_training" class="col-sm-4 col-form-label">RII TRAINING
-                                    (only
-                                    for applicant RII)</label>
+                                <label for="rii_training" class="col-sm-4 col-form-label">RII TRAINING
+                                    (only for applicant RII)</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="last_performed_rii_training"
-                                        id="last_performed_rii_training" placeholder="Input your etops training">
+                                    <input type="text"
+                                        class="form-control @error('rii_training') is-invalid @enderror"
+                                        name="rii_training" id="rii_training"
+                                        placeholder="Input your last performed year" value="{{ old('rii_training') }}">
+                                    @error('rii_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <!-- Lion Air Aircraft Type -->
                             <h3 class="mb-4">Lion Air Aircraft Type</h3>
@@ -300,14 +429,19 @@
                                 <div class="form-group">
                                     <div data-repeater-list="lion_air_aircraft_type">
                                         <!-- Item Template -->
-                                        <div data-repeater-item class=" mb-2  rounded">
+                                        <div data-repeater-item class="mb-2 rounded">
                                             <div class="row align-items-center">
-                                                <!-- category -->
+                                                <!-- type -->
                                                 <div class="col-md-10 mb-2 mb-md-0">
                                                     <div class="form-floating">
-                                                        <input type="text" name="category" class="form-control"
-                                                            id="category" placeholder="Input your category" required>
-                                                        <label for="category">Type</label>
+                                                        <input type="text" name="air_craft_type"
+                                                            class="form-control @error('lion_air_aircraft_type.*.air_craft_type') is-invalid @enderror"
+                                                            id="type" placeholder="Input your type"
+                                                            value="{{ old('lion_air_aircraft_type.*.air_craft_type') }}">
+                                                        <label for="type">Type</label>
+                                                        @error('lion_air_aircraft_type.*.air_craft_type')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
@@ -332,6 +466,7 @@
                                     </button>
                                 </div>
                             </div>
+
                             <!-- End Repeater Section -->
                         </div>
 
@@ -432,8 +567,8 @@
 
             // Mapping antara checkbox ID dengan elemen yang akan ditampilkan
             const mappings = {
-                "rii": "last_performed_rii_training",
-                "etops": "last_performed_etops_training",
+                "rii": "rii_training",
+                "etops": "etops_training",
             };
 
             // Menambahkan event listener pada setiap checkbox

@@ -3,6 +3,10 @@
 
 @section('content')
     <h2>Submission Histories</h2>
+    @if (session('success'))
+        @component('components.alert', ['type' => 'success', 'message' => session('success')])
+        @endcomponent
+    @endif
     <div class="table-responsive small">
         <table class="table table-striped table-sm">
             <thead>

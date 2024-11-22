@@ -11,6 +11,7 @@ class LionAirAirCraftType extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'air_craft_type'
+        'air_craft_type',
+        'otr_application_id',
     ];
 }

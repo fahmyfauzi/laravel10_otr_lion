@@ -13,5 +13,6 @@ class BasicLicense extends Model
     protected $fillable = [
         'card_no',
         'category',
+        'otr_application_id',
     ];
 }

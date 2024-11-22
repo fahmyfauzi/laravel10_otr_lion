@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users');
             $table->foreignUuid('authorize_laca_id')->constrained('authorize_lacas');
             $table->foreignUuid('mandatory_training_id')->constrained('mandatory_trainings');
-            $table->foreignUuid('pic_coodinator_id')->constrained('users');
-            $table->enum('pic_status', ['process', 'rejected', 'approved']);
+            $table->foreignUuid('ame_license_id')->constrained('ame_licenses');
+            $table->foreignUuid('pic_coodinator_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->enum('pic_status', ['process', 'rejected', 'approved'])->default('process');
             $table->timestamp('submited_at')->nullable();
             $table->timestamp('pic_check_at')->nullable();
             $table->timestamps();

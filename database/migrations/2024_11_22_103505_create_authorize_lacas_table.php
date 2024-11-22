@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('authorize_lacas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('authorization_date');
+            $table->date('authorization_date')->default(now());
             $table->string('type');
             $table->string('no');
             $table->string('validy');

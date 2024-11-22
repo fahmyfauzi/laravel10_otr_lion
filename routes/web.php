@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EngineerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,13 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('auth.login');
 });
+
+
+// dashboard
+Route::get('/home', function () {
+    return view('engineer.dashboard');
+})->name('dashboard.index');
+
+
+// submission
+Route::resource('/submission', EngineerController::class)->except(['destroy']);

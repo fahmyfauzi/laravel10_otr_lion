@@ -12,6 +12,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Date</th>
                     <th scope="col">Result</th>
                     <th scope="col">Accepted / Rejected</th>
@@ -19,39 +20,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Senin 12 Januari 2024</td>
-                    <td>70%</td>
-                    <td><span class="badge text-bg-success">Accepted</span></td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Senin 12 Januari 2024</td>
-                    <td>50%</td>
-                    <td><span class="badge text-bg-danger">Rejected</span></td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Senin 12 Januari 2024</td>
-                    <td>-</td>
-                    <td><span class="badge text-bg-warning">Pending</span></td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
-                    </td>
-                </tr>
+                @php
+                    $no = 1;
+                @endphp
+                @forelse ($histories as $history)
+                    <tr>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $history->personnel->name }}</td>
+                        <td>{{ $history->created_at->format('D d M Y') }}</td>
+                        <td>70%</td>
+                        <td><span class="badge text-bg-success">Accepted</span></td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
+                        </td>
+                    </tr>
+                @empty
+                    <td colspan="5" class="text-center">No Data</td>
+                @endforelse
 
 
             </tbody>

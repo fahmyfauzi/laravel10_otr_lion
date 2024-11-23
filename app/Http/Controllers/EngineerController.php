@@ -21,7 +21,12 @@ class EngineerController extends Controller
      */
     public function index()
     {
-        //
+        $histories = OtrApplication::with(['personnel', 'assessment'])->where('user_id', Auth::user()->id)->get();
+
+
+        return view('engineer.dashboard', [
+            'histories' => $histories
+        ]);
     }
 
     /**
@@ -140,6 +145,8 @@ class EngineerController extends Controller
             // save ame license
             $ameLicense =         AmeLicense::create($ameLicenseValidated);
 
+
+
             // save otr application
             $otrApplication = OtrApplication::create([
                 'personnel_id' => $personnel->id,
@@ -148,7 +155,6 @@ class EngineerController extends Controller
                 'mandatory_training_id' => $mandatoryTraining->id,
                 'ame_license_id' => $ameLicense->id,
                 'pic_coodinator_id' => $request->pic_coodinator_id,
-                'pic_status' => 'process',
                 'submited_at' => now(),
             ]);
 
@@ -185,7 +191,7 @@ class EngineerController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.index')->with('success', 'Data has been saved successfully.');
+            return redirect()->route('submission.index')->with('success', 'Data has been saved successfully.');
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();

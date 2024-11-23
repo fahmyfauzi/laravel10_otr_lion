@@ -14,4 +14,9 @@ class LionAirAirCraftType extends Model
         'air_craft_type',
         'otr_application_id',
     ];
+
+    public function otr_application()
+    {
+        return $this->belongsTo(OtrApplication::class);
+    }
 }

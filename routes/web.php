@@ -23,10 +23,6 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::middleware(['auth', 'role:applicant'])->prefix('/applicant')->group(function () {
-    // dashboard
-    Route::get('/home', function () {
-        return view('engineer.dashboard');
-    })->name('dashboard.index');
 
     // submission
     Route::resource('/submission', EngineerController::class)->except(['destroy']);

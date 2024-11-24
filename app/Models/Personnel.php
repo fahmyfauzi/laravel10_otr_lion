@@ -16,6 +16,7 @@ class Personnel extends Model
         'photo',
         'place_of_birth',
         'date_of_birth',
+        'address',
         'phone',
         'company_no_id',
         'last_formal_education'

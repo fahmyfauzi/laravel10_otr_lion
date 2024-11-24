@@ -51,7 +51,7 @@ class OtrApplication extends Model
 
     public function picCoordinator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pic_coodinator_id');
     }
 
     public function basicLicenses()

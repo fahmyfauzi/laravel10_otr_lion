@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('photo');
             $table->string('place_of_birth');
             $table->date('date_of_birth');
+            $table->text('address');
             $table->string('phone');
             $table->string('company_no_id');
             $table->string('last_formal_education');

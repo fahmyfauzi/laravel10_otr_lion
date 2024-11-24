@@ -10,22 +10,23 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                        href="{{ route('submission.index') }}">
+                        href="{{ auth()->user()->role === 'pic_coordinator' ? route('pic.index') : route('submission.index') }}">
                         <svg class="bi">
                             <use xlink:href="#house-fill" />
                         </svg>
                         Home
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('submission.create') }}">
-                        <svg class="bi">
-                            <use xlink:href="#file-earmark" />
-                        </svg>
-                        Submission
-                    </a>
-                </li>
-
+                @if (Auth::user()->role == 'applicant')
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('submission.create') }}">
+                            <svg class="bi">
+                                <use xlink:href="#file-earmark" />
+                            </svg>
+                            Submission
+                        </a>
+                    </li>
+                @endif
             </ul>
 
 

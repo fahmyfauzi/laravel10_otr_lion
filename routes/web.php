@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\EngineerController;
+use App\Http\Controllers\PicController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +25,12 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::middleware(['auth', 'role:applicant'])->prefix('/applicant')->group(function () {
-
     // submission
     Route::resource('/submission', EngineerController::class)->except(['destroy']);
+});
+
+Route::middleware(['auth', 'role:pic_coordinator'])->prefix('/pic-coordinator')->group(function () {
+    Route::get('/home', [PicController::class, 'index'])->name('pic.index');
+    Route::get('/submission/{id}/show', [PicController::class, 'show'])->name('pic.show');
+    Route::patch('/submission/{id}/update', [PicController::class, 'update'])->name('pic.update');
 });

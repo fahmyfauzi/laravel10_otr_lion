@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="address" class="col-sm-4 col-form-label">Address</label>
+                                <label for="address" class="col-sm-4 col-form-label">address</label>
                                 <div class="col-sm-8">
                                     <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror"
                                         placeholder="Input your address">{{ old('address') }}</textarea>

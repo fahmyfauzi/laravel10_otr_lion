@@ -118,18 +118,21 @@ class EngineerController extends Controller
 
         DB::beginTransaction();
         try {
-            // save personal data
-            $personnel = Personnel::create($biodata);
-            // Menyimpan foto ke dalam storage
+            // save photo
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo');
-                $photoPath = $photo->store('uploads/photos', 'public');
+                $photoName = time() . '_' . $photo->getClientOriginalName();
 
-                // Menambahkan path ke $biodata untuk disimpan ke database
-                $biodata['photo'] = $photoPath;
+                // Simpan file di folder storage/public/uploads/photos
+                $photo->storeAs('uploads/photos', $photoName, 'public');
+
+                // Simpan nama file ke database
+                $biodata['photo'] = $photoName;
             }
-            // save authorization laca
-            // AuthorizeLaca::create($authorizationLacaValidated);
+
+            // save personal data
+            $personnel = Personnel::create($biodata);
+
             $authorizationLaca = AuthorizeLaca::create([
                 'type' => $request->type,
                 'no' => $request->no,

@@ -42,7 +42,7 @@ class EngineerController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // validate biodata
         $biodata =  $request->validate([
             'name'        => 'required',
             'place_of_birth' => 'required',
@@ -54,19 +54,11 @@ class EngineerController extends Controller
             'last_formal_education' => 'required',
         ]);
 
-        $authorizationLacaValidated = $request->validate([
-            'type' => 'required',
-            'no' => 'required',
-            'validy' => 'required',
-            'mr' => 'nullable|boolean',
-            'rii' => 'nullable|boolean',
-            'etops' => 'nullable|boolean',
-        ]);
-
+        // validate type of rating training
         $typeOfRatingTrainingValidated = $request->validate([
-            'type_of_rating_training' => 'required|array|min:1', // Validasi array dan minimal 1 item
-            'type_of_rating_training.*.course' => 'required|string|max:255', // Validasi setiap field "course"
-            'type_of_rating_training.*.year' => 'required|integer|digits:4|min:1900|max:' . date('Y'), // Validasi setiap field "year"
+            'type_of_rating_training' => 'required|array|min:1',
+            'type_of_rating_training.*.course' => 'required|string|max:255',
+            'type_of_rating_training.*.year' => 'required|integer|digits:4|min:1900|max:' . date('Y'),
         ], [
             'type_of_rating_training.required' => 'At least one training record is required.',
             'type_of_rating_training.*.course.required' => 'Course name is required for each training.',
@@ -79,6 +71,7 @@ class EngineerController extends Controller
             'type_of_rating_training.*.year.max' => 'Year cannot be in the future.',
         ]);
 
+        // validate basic license
         $basicLicenseValidated = $request->validate([
             'basic_license' => 'required|array|min:1', // Validasi bahwa field ini adalah array dan minimal ada 1 item
             'basic_license.*.category' => 'required|string|max:255', // Validasi untuk setiap "category"
@@ -93,19 +86,13 @@ class EngineerController extends Controller
             'basic_license.*.card_no.max' => 'Card No. cannot exceed 255 characters.',
         ]);
 
+        // validate AME License
         $ameLicenseValidated = $request->validate([
             'license_no' => 'required',
             'vut' => 'required',
         ]);
 
-        $mandatoryTrainingValidated = $request->validate([
-            'human_factory' => 'required',
-            'sms_training' => 'required',
-            'rvsm_pbn_training' => 'required',
-            'etops_training' => 'nullable',
-            'rii_training' => 'nullable',
-        ]);
-
+        // validate lion air aircraft type
         $lionAirAircraftTypeValidated = $request->validate([
             'lion_air_aircraft_type' => 'required|array|min:1', // Validasi array dan minimal 1 item
             'lion_air_aircraft_type.*.air_craft_type' => 'required|string|max:255', // Validasi setiap field "type" dalam array
@@ -133,31 +120,15 @@ class EngineerController extends Controller
             // save personal data
             $personnel = Personnel::create($biodata);
 
-            $authorizationLaca = AuthorizeLaca::create([
-                'type' => $request->type,
-                'no' => $request->no,
-                'validy' => $request->validy,
-                'mr' => $request->has('mr') ? true : false,
-                'rii' => $request->has('rii') ? true : false,
-                'etops' => $request->has('etops') ? true : false,
-            ]);
-
-            // save mandatory training
-            $mandatoryTraining = MandatoryTraining::create($mandatoryTrainingValidated);
-
             // save ame license
             $ameLicense =         AmeLicense::create($ameLicenseValidated);
-
-
 
             // save otr application
             $otrApplication = OtrApplication::create([
                 'personnel_id' => $personnel->id,
                 'user_id' => Auth::user()->id,
-                'authorize_laca_id' => $authorizationLaca->id,
-                'mandatory_training_id' => $mandatoryTraining->id,
                 'ame_license_id' => $ameLicense->id,
-                'pic_coodinator_id' => $request->pic_coodinator_id,
+                'pic_coordinator_id' => $request->pic_coordinator_id,
                 'submited_at' => now(),
             ]);
 
@@ -207,7 +178,7 @@ class EngineerController extends Controller
      */
     public function show(string $id)
     {
-        $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining', 'assessment', 'assessment.qualityInspector'])->find($id);
+        $submission = OtrApplication::WithAllRelations()->find($id);
 
         return view('partials.show', [
             'submission' => $submission

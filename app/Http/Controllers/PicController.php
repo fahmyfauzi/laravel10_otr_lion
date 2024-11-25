@@ -25,7 +25,7 @@ class PicController extends Controller
      */
     public function show(string $id,)
     {
-        $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining'])->find($id);
+        $submission = OtrApplication::WithAllRelations()->find($id);
 
         return view('partials.show', [
             'submission' => $submission
@@ -41,7 +41,7 @@ class PicController extends Controller
         // update status
         $submission = OtrApplication::find($id);
         $submission->pic_status = $request->status;
-        $submission->pic_coodinator_id  = Auth::user()->id;
+        $submission->pic_coordinator_id  = Auth::user()->id;
         $submission->pic_check_at = now();
         $submission->save();
 

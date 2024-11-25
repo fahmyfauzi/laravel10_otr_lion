@@ -13,340 +13,368 @@
     @endif
 
     <div class="container">
-        <h2>Detail Submission {{ $submission->personnel->name }}</h2>
-        <div class="row g-4">
-            <!-- Biodata -->
-            <div class="col-md-8">
-                <h3>Biodata</h3>
-                <div class="d-flex flex-column flex-md-row gap-3">
+        <form action="{{ route('quality-inspector.update', $submission->id) }}" method="POST">
+            @csrf
+            <div class="row g-4">
+                <h2>Detail Submission {{ $submission->personnel->name }}</h2>
+                <!-- Biodata -->
+                <div class="col-md-8">
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                        <div class="border text-white p-2 text-center flex-shrink-0" style="min-width: 150px;"
+                            id="fileUploadBox">
+                            <!-- Image Preview -->
+                            <img id="imagePreview"
+                                src="{{ asset('storage/uploads/photos/' . $submission->personnel->photo) }}"
+                                alt="Image Preview" class="img-fluid" style="max-width: 100px; ">
+                        </div>
+                        <div class="w-100">
+                            <div class="row">
+                                <label for="name" class="col-sm-4 col-form-label">Name</label>
+                                <div class="col-sm-8">
+                                    {{ $submission->personnel->name }}
+                                </div>
 
-                    <div class="border text-white p-2 text-center flex-shrink-0" style="min-width: 150px; cursor: pointer;"
-                        id="fileUploadBox">
-                        <!-- Image Preview -->
-                        <img id="imagePreview" src="{{ asset('storage/uploads/photos/' . $submission->personnel->photo) }}"
-                            alt="Image Preview" class="img-fluid" style="max-width: 100px; ">
-                    </div>
-                    <div class="w-100">
-                        <div class="mb-3 row">
-                            <label for="name" class="col-sm-4 col-form-label">Name</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->personnel->name }}</p>
+                            </div>
+                            <div class=" row">
+                                <label for="place_of_birth" class="col-sm-4 col-form-label">Place / Date of Birth</label>
+                                <div class="col-sm-8">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {{ $submission->personnel->place_of_birth }},
+                                        {{ $submission->personnel->date_of_birth }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=" row">
+                                <label for="address" class="col-sm-4 col-form-label">Address</label>
+                                <div class="col-sm-8">
+                                    {{ $submission->personnel->address }}
+                                </div>
+                            </div>
+
+                            <div class=" row">
+                                <label for="phone" class="col-sm-4 col-form-label">Phone</label>
+                                <div class="col-sm-8">
+                                    {{ $submission->personnel->phone }}
+                                </div>
+                            </div>
+
+                            <div class=" row">
+                                <label for="company_no_id" class="col-sm-4 col-form-label">Company ID No.</label>
+                                <div class="col-sm-8">
+                                    {{ $submission->personnel->company_no_id }}
+                                </div>
+                            </div>
+
+                            <div class=" row">
+                                <label for="last_formal_education" class="col-sm-4 col-form-label">Last Formal
+                                    Education</label>
+                                <div class="col-sm-8">
+                                    {{ $submission->personnel->last_formal_education }}
+                                </div>
                             </div>
 
                         </div>
-                        <div class="mb-3 row">
-                            <label for="place_of_birth" class="col-sm-4 col-form-label">Place / Date of Birth</label>
-                            <div class="col-sm-8">
-                                <div class="d-flex flex-wrap gap-2">
-                                    <p>{{ $submission->personnel->place_of_birth }},
-                                        {{ $submission->personnel->date_of_birth }}</p>
+                    </div>
+                </div>
+
+                <!-- Authorization LACA -->
+                <div class="col-md-4">
+                    <div class="border">
+                        <div class=" text-center text-allign-center bg-light p-2">
+                            <span class=" text-black d-block fs-5 fw-semibold">Authorization LACA</span>
+                            <span class=" text-muted ">(fill by quality inspector)</span>
+                        </div>
+                        <hr class="m-0">
+                        <div class="p-2">
+                            <div class="d-flex flex-wrap gap-3 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input " type="radio" id="initial" name="type"
+                                        value="initial">
+                                    <label class="form-check-label" for="initial">Initial</label>
+
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="additional" name="type"
+                                        value="additional">
+                                    <label class="form-check-label" for="additional">Additional</label>
+
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input " type="radio" id="renewal" name="type"
+                                        value="renewal">
+                                    <label class="form-check-label" for="renewal">Renewal</label>
+                                </div>
+                                @error('type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="no" class="col-sm-4 col-form-label">No.</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control @error('no') is-invalid @enderror"
+                                        name="no" id="no" placeholder="Input your laca no"
+                                        value="{{ old('no') }}">
+                                    @error('no')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="validy" class="col-sm-4 col-form-label">Validy</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control @error('validy') is-invalid @enderror"
+                                        name="validy" id="validy" placeholder="Input your validity"
+                                        value="{{ old('validy') }}">
+                                    @error('validy')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="scope" class="col-sm-4 col-form-label">Scope</label>
+                                <div class="col-sm-8 align-items-center ">
+                                    <div class="d-flex flex-wrap gap-4 pt-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input " type="checkbox" id="mr"
+                                                name="mr" value="1">
+                                            <label class="form-check-label" for="mr">MR</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input " type="checkbox" id="rii"
+                                                name="rii" value="1">
+                                            <label class="form-check-label" for="rii">RII</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input " type="checkbox" id="etops"
+                                                name="etops" value="1">
+                                            <label class="form-check-label" for="etops">ETOPS</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mb-3 row">
-                            <label for="address" class="col-sm-4 col-form-label">Address</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->personnel->address }}</p>
-                            </div>
+                    </div>
+
+                </div>
+
+                <!-- TYPE OF RATING TRAINING &  -->
+                <div class="col-12">
+                    <div class="row">
+                        <!-- TYPE OF RATING TRAINING -->
+                        <div class="col-md-6">
+                            <table class="table border">
+                                <thead class="table-light ">
+                                    <tr>
+                                        <th colspan="3">
+                                            Type of Rating Training
+                                        </th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th>
+                                            No.
+                                        </th>
+                                        <th>Course</th>
+                                        <th>Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @forelse ($submission->ratingTrainings as $ratingTraining)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>
+                                                {{ $ratingTraining->course }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $ratingTraining->year }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center">
+                                                No data
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div class="mb-3 row">
-                            <label for="phone" class="col-sm-4 col-form-label">Phone</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->personnel->phone }}</p>
-                            </div>
+                        <!-- TYPE OF BASIC LICENSE -->
+                        <div class="col-md-6">
+                            <table class="table border">
+                                <thead class="table-light ">
+                                    <tr>
+                                        <th colspan="3">
+                                            BASIC LICENSE
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            No.
+                                        </th>
+                                        <th>Category</th>
+                                        <th>Card No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($submission->basicLicenses as $basicLicense)
+                                        <tr>
+                                            <td>
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>
+                                                {{ $basicLicense->category }}
+                                            </td>
+                                            <td>
+                                                {{ $basicLicense->card_no }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center">
+                                                No data
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
-
-                        <div class="mb-3 row">
-                            <label for="company_no_id" class="col-sm-4 col-form-label">Company ID No.</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->personnel->company_no_id }}</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="last_formal_education" class="col-sm-4 col-form-label">Last Formal
-                                Education</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->personnel->last_formal_education }}</p>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-            </div>
 
-            <!-- Authorization LACA -->
-            <div class="col-md-4 ">
-                <p>Date: {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat('l, d F Y') }}
-                </p>
+                <div class="col-12 mb-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- AME LICENSE -->
+                            <table class="table border mb-4">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="table-light">License No.</th>
+                                        <td>{{ $submission->ameLicense->license_no }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">V.U.T</th>
+                                        <td>{{ $submission->ameLicense->vut }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                <div class="border ">
-                    <div class="py-2 text-center text-allign-center bg-light">
-                        <h5>Authorization LACA</h5>
-                        <p class=" text-muted">(fill by quality inspector)</p>
-                    </div>
-                    <hr class="my-0">
-                    <div class="p-3">
-
-                        <div class="d-flex flex-wrap gap-3 mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input " type="radio" id="initial" name="type"
-                                    value="initial" {{ $submission->authorizeLaca->type == 'initial' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="initial">Initial</label>
-
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="additional" name="type"
-                                    value="additional"
-                                    {{ $submission->authorizeLaca->type == 'additional' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="additional">Additional</label>
-
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input " type="radio" id="renewal" name="type"
-                                    value="renewal" {{ $submission->authorizeLaca->type == 'renewal' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="renewal">Renewal</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="no" class="col-sm-4 col-form-label">No.</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->authorizeLaca->no }}</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="validy" class="col-sm-4 col-form-label">Validy</label>
-                            <div class="col-sm-8">
-                                <p>{{ $submission->authorizeLaca->validy }}</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="scope" class="col-sm-4 col-form-label">Scope</label>
-                            <div class="col-sm-8 align-items-center ">
-                                <div class="d-flex flex-wrap gap-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" id="mr" name="mr"
-                                            value="1" {{ $submission->authorizeLaca->mr == true ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="mr">MR</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" id="rii" name="rii"
-                                            value="1" {{ $submission->authorizeLaca->rii == true ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="rii">RII</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" id="etops" name="etops"
-                                            value="1"
-                                            {{ $submission->authorizeLaca->etops == true ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="etops">ETOPS</label>
-                                    </div>
+                            <!-- MANDATORY TRAINING -->
+                            <h3>Mandatory Training</h3>
+                            <div class="mb-3 row">
+                                <label for="human_factory" class="col-sm-4 col-form-label">Human Factor
+                                    Training</label>
+                                <div class="col-sm-8">
+                                    <input type="text"
+                                        class="form-control @error('human_factory') is-invalid @enderror"
+                                        name="human_factory" id="human_factory"
+                                        placeholder="Input your last performed year" value="{{ old('human_factory') }}">
+                                    @error('human_factory')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+                            <div class="mb-3 row">
+                                <label for="sms_training" class="col-sm-4 col-form-label">SMS
+                                    TRAINING</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control @error('sms_training') is-invalid @enderror"
+                                        name="sms_training" id="sms_training"
+                                        placeholder="Input your last performed year" value="{{ old('sms_training') }}">
+                                    @error('sms_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="rvsm_pbn_training" class="col-sm-4 col-form-label">RVSM PBN
+                                    TRAINING</label>
+                                <div class="col-sm-8">
+                                    <input type="text"
+                                        class="form-control @error('rvsm_pbn_training') is-invalid @enderror"
+                                        name="rvsm_pbn_training" id="rvsm_pbn_training"
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('rvsm_pbn_training') }}">
+                                    @error('rvsm_pbn_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="etops_training" class="col-sm-4 col-form-label">ETOPS TRAINING
+                                    (only for applicant for A/C type effective ETOPS)</label>
+                                <div class="col-sm-8">
+                                    <input type="text"
+                                        class="form-control @error('etops_training') is-invalid @enderror"
+                                        name="etops_training" id="etops_training"
+                                        placeholder="Input your last performed year" value="{{ old('etops_training') }}">
+                                    @error('etops_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="rii_training" class="col-sm-4 col-form-label">RII TRAINING
+                                    (only for applicant RII)</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control @error('rii_training') is-invalid @enderror"
+                                        name="rii_training" id="rii_training"
+                                        placeholder="Input your last performed year" value="{{ old('rii_training') }}">
+                                    @error('rii_training')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- LION AIR AIRCRAFT TYPE -->
+                        <div class="col-md-6">
+                            <table class="table border">
+                                <thead class="table-light text-center">
+                                    <tr>
+                                        <th>
+                                            No.
+                                        </th>
+                                        <th>Lion Air Aircraft Type
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($submission->lionAirAirCraftTypes as $lionAirAirCraftType)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>
+                                                {{ $lionAirAirCraftType->air_craft_type }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="2" class="text-center">
+                                                No data
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div class="col-12">
-                <div class="row">
-                    <!-- TYPE OF RATING TRAINING -->
-                    <div class="col-md-6">
-                        <table class="table border">
-                            <thead class="table-light ">
-                                <tr>
-                                    <th colspan="3">
-                                        Type of Rating Training
-                                    </th>
-                                </tr>
-                                <tr class="text-center">
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Course</th>
-                                    <th>Year</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @forelse ($submission->ratingTrainings as $ratingTraining)
-                                    <tr>
-                                        <td class="text-center">
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td>
-                                            {{ $ratingTraining->course }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $ratingTraining->year }}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            No data
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- TYPE OF BASIC LICENSE -->
-                    <div class="col-md-6">
-                        <table class="table border">
-                            <thead class="table-light ">
-                                <tr>
-                                    <th colspan="3">
-                                        BASIC LICENSE
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Category</th>
-                                    <th>Card No.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($submission->basicLicenses as $basicLicense)
-                                    <tr>
-                                        <td>
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td>
-                                            {{ $basicLicense->category }}
-                                        </td>
-                                        <td>
-                                            {{ $basicLicense->card_no }}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            No data
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- AME LICENSE -->
-                        <table class="table border mb-4">
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="table-light">License No.</th>
-                                    <td>{{ $submission->ameLicense->license_no }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-light">V.U.T</th>
-                                    <td>{{ $submission->ameLicense->vut }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- MANDATORY TRAINING -->
-                        <table class="table border">
-                            <thead class="text-center table-light">
-                                <tr>
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Mandatory Training <br> Initial/Recurrent</th>
-                                    <th>Last Performed Year</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>HUMAN FACTOR TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->human_factory }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>SMS TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->sms_training }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">3</td>
-                                    <td>RVSM PBN TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->rvsm_pbn_training }}</td>
-                                </tr>
-                                @if ($submission->mandatoryTraining->etops_training != null)
-                                    <tr>
-                                        <td class="text-center">4</td>
-                                        <td>ETOPS TRAINING (only for
-                                            applicant for A/C type effective
-                                            ETOPS)</td>
-                                        <td class="text-center">{{ $submission->mandatoryTraining->etops_training }}</td>
-                                    </tr>
-                                @endif
-                                @if ($submission->mandatoryTraining->rii_training != null)
-                                    <tr>
-                                        <td class="text-center">5</td>
-                                        <td>RII TRAINING (only for applicant
-                                            RII)</td>
-                                        <td class="text-center">{{ $submission->mandatoryTraining->rii_training }}</td>
-                                    </tr>
-                                @endif
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- LION AIR AIRCRAFT TYPE -->
-                    <div class="col-md-6">
-                        <table class="table border">
-                            <thead class="table-light text-center">
-                                <tr>
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Lion Air Aircraft Type
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($submission->lionAirAirCraftTypes as $lionAirAirCraftType)
-                                    <tr>
-                                        <td class="text-center">
-                                            {{ $loop->iteration }}
-                                        </td>
-                                        <td>
-                                            {{ $lionAirAirCraftType->air_craft_type }}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="text-center">
-                                            No data
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- assessment -->
-        <div class="mb-5">
-            <form action="{{ route('quality-inspector.update', $submission->id) }}" method="POST">
-                @csrf
+            <!-- assessment -->
+            <div class="mb-5">
 
                 <table class="table">
                     <thead class="table-light">
@@ -583,9 +611,8 @@
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            </form>
-
-        </div>
+            </div>
+        </form>
 
         <!-- signature -->
         <div class="justify-content-between text-center">
@@ -604,11 +631,11 @@
             <div class="row fw-semibold">
                 <div class="col">
                     <p>({{ $submission->applicant->name }} ,
-                        {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat(' d F Y') }})
+                        {{ \Carbon\Carbon::parse($submission->submited_at)->translatedFormat(' d M Y') }})
                     </p>
                 </div>
                 <div class="col ">
-                    @if ($submission->pic_coodinator_id && $submission->pic_check_at)
+                    @if ($submission->pic_coordinator_id && $submission->pic_check_at)
                         ({{ $submission->pic_status == 'approved' ? 'Approved by:' : 'Rejected by:' }}
                         {{ $submission->picCoordinator->name }},
                         {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d M Y') }})
@@ -620,7 +647,7 @@
                     @if ($submission->assessment)
                         <p>( {{ $submission->assessment->status == 'pass' ? 'Pass by:' : 'Fail by:' }}
                             {{ $submission->assessment->qualityInspector->name }},
-                            {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d F Y') }})</p>
+                            {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d M Y') }})</p>
                     @else
                         ( )
                     @endif
@@ -763,6 +790,43 @@
                 // Set the value back to the input field
                 this.value = value;
             });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkboxes = document.querySelectorAll(".form-check-input");
+
+            // Mapping antara checkbox ID dengan elemen yang akan ditampilkan
+            const mappings = {
+                "rii": "rii_training",
+                "etops": "etops_training",
+            };
+
+            // Menambahkan event listener pada setiap checkbox
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener("change", function() {
+                    const fieldId = mappings[this.id];
+
+                    if (fieldId) {
+                        const field = document.getElementById(fieldId).closest(".row");
+
+                        // Tampilkan atau sembunyikan field berdasarkan checkbox status
+                        if (this.checked) {
+                            field.style.display = "flex";
+                        } else {
+                            field.style.display = "none";
+                        }
+                    }
+                });
+            });
+
+            // Menyembunyikan semua elemen terkait pada awal
+            for (const fieldId in mappings) {
+                const field = document.getElementById(mappings[fieldId]).closest(".row");
+                if (field) {
+                    field.style.display = "none";
+                }
+            }
         });
     </script>
 @endpush

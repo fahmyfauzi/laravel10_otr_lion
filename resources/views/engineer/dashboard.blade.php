@@ -59,7 +59,6 @@
                             <a href="{{ route('submission.show', $history->id) }}"
                                 class="btn btn-sm btn-outline-secondary">View</a>
                             <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
                         </td>
                     </tr>
                 @empty

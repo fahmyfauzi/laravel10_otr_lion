@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('assessments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('quality_inspector_id')->constrained('users')->nullable();
+            $table->foreignUuid('authorize_laca_id')->constrained('authorize_lacas');
+            $table->foreignUuid('mandatory_training_id')->constrained('mandatory_trainings');
             $table->integer('assessment_material_1')->nullable();
             $table->integer('assessment_material_2')->nullable();
             $table->integer('assessment_material_3')->nullable();

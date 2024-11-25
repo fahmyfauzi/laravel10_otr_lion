@@ -13,31 +13,35 @@ class OtrApplication extends Model
     protected $fillable = [
         'personnel_id',
         'user_id',
-        'authorize_laca_id',
-        'mandatory_training_id',
         'ame_license_id',
         'asessment_id',
-        'pic_coodinator_id',
+        'pic_coordinator_id',
         'pic_status',
         'submited_at',
         'pic_check_at'
 
     ];
 
+    public function scopeWithAllRelations($query)
+    {
+        return $query->with([
+            'personnel',
+            'ratingTrainings',
+            'basicLicenses',
+            'ameLicense',
+            'lionAirAirCraftTypes',
+            'assessment',
+            'assessment.qualityInspector',
+            'assessment.authorizeLaca',
+            'assessment.mandatoryTraining'
+        ]);
+    }
+
     public function personnel()
     {
         return $this->belongsTo(Personnel::class);
     }
 
-    public function authorizeLaca()
-    {
-        return $this->belongsTo(AuthorizeLaca::class);
-    }
-
-    public function mandatoryTraining()
-    {
-        return $this->belongsTo(MandatoryTraining::class);
-    }
 
     public function ameLicense()
     {
@@ -51,7 +55,7 @@ class OtrApplication extends Model
 
     public function picCoordinator()
     {
-        return $this->belongsTo(User::class, 'pic_coodinator_id');
+        return $this->belongsTo(User::class, 'pic_coordinator_id');
     }
 
     public function basicLicenses()

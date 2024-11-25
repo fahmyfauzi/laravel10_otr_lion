@@ -12,6 +12,8 @@ class Assessment extends Model
 
     protected $fillable = [
         'quality_inspector_id',
+        'authorize_laca_id',
+        'mandatory_training_id',
         'assessment_material_1',
         'assessment_material_2',
         'assessment_material_3',
@@ -33,5 +35,16 @@ class Assessment extends Model
     public function qualityInspector()
     {
         return $this->belongsTo(User::class, 'quality_inspector_id');
+    }
+
+
+    public function authorizeLaca()
+    {
+        return $this->belongsTo(AuthorizeLaca::class);
+    }
+
+    public function mandatoryTraining()
+    {
+        return $this->belongsTo(MandatoryTraining::class);
     }
 }

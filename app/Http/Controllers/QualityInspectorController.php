@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assessment;
+use App\Models\AuthorizeLaca;
+use App\Models\MandatoryTraining;
 use App\Models\OtrApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +46,7 @@ class QualityInspectorController extends Controller
      */
     public function show(string $id)
     {
-        $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining', 'assessment', 'assessment.qualityInspector'])->find($id);
+        $submission = OtrApplication::WithAllRelations()->find($id);
 
         return view('partials.show', [
             'submission' => $submission
@@ -56,7 +58,7 @@ class QualityInspectorController extends Controller
      */
     public function assessment(string $id)
     {
-        $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining'])->find($id);
+        $submission = OtrApplication::WithAllRelations()->find($id);
         return view('quality-inspector.assessment', [
             'submission' => $submission
         ]);
@@ -67,7 +69,8 @@ class QualityInspectorController extends Controller
      */
     public function postAssessment(Request $request, string $id)
     {
-        $request->validate([
+
+        $assessmentMaterialValidated = $request->validate([
             'assessment_material_1' => 'required|numeric|min:0|max:100',
             'assessment_material_2' => 'required|numeric|min:0|max:100',
             'assessment_material_3' => 'required|numeric|min:0|max:100',
@@ -78,6 +81,25 @@ class QualityInspectorController extends Controller
             'assessment_material_8' => 'required|numeric|min:0|max:100',
             'assessment_material_9' => 'required|numeric|min:0|max:100',
         ]);
+
+        $authorizationLacaValidated = $request->validate([
+            'type' => 'required',
+            'no' => 'required',
+            'validy' => 'required',
+            'mr' => 'nullable|boolean',
+            'rii' => 'nullable|boolean',
+            'etops' => 'nullable|boolean',
+        ]);
+
+
+        $mandatoryTrainingValidated = $request->validate([
+            'human_factory' => 'required',
+            'sms_training' => 'required',
+            'rvsm_pbn_training' => 'required',
+            'etops_training' => 'nullable',
+            'rii_training' => 'nullable',
+        ]);
+
 
         // Menggunakan array untuk menyimpan nilai material
         $materials = [
@@ -102,9 +124,31 @@ class QualityInspectorController extends Controller
 
         DB::beginTransaction();
         try {
-            // Simpan data assessment
+            // save authorize laca
+            $authorizeLaca = AuthorizeLaca::create([
+                'type' => $request->type,
+                'no' => $request->no,
+                'validy' => $request->validy,
+                'mr' => $request->has('mr') ? true : false,
+                'rii' => $request->has('rii') ? true : false,
+                'etops' => $request->has('etops') ? true : false,
+            ]);
+
+            // save mandatory
+            $mandatory = MandatoryTraining::create([
+                'human_factory' => $request->human_factory,
+                'sms_training' => $request->sms_training,
+                'rvsm_pbn_training' => $request->rvsm_pbn_training,
+                'etops_training' => $request->has('etops_training') ? true : false,
+                'rii_training' => $request->has('rii_training') ? true : false,
+            ]);
+
+
+            // save data assessment
             $assessment = Assessment::create([
                 'quality_inspector_id' => Auth::user()->id,
+                'authorize_laca_id' => $authorizeLaca->id,
+                'mandatory_training_id' => $mandatory->id,
                 'assessment_material_1' => $request->assessment_material_1,
                 'assessment_material_2' => $request->assessment_material_2,
                 'assessment_material_3' => $request->assessment_material_3,

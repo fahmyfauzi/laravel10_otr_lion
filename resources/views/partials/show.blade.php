@@ -63,81 +63,89 @@
                 </div>
             </div>
 
-            <!-- Authorization LACA -->
-            <div class="col-md-4 ">
-                <span>Date:
-                    {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat('l, d F Y') }}
-                </span>
 
-                <div class="border ">
-                    <div class=" text-center text-allign-center bg-light">
-                        <span class=" text-black d-block fs-5 fw-semibold">Authorization LACA</span>
-                        <span class=" text-muted ">(fill by quality inspector)</span>
-                    </div>
-                    <hr class="my-0">
-                    <div class="p-2">
-                        <div class="d-flex flex-wrap gap-3 ">
-                            <div class="form-check">
-                                <input class="form-check-input " type="checkbox" id="initial" name="type"
-                                    value="initial" {{ $submission->authorizeLaca->type == 'initial' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="initial">Initial</label>
+            @if (Auth::user()->role !== 'pic_coordinator' && $submission->assessment)
+                <!-- Authorization LACA -->
+                <div class="col-md-4 ">
+                    <span>Date:
+                        @if ($submission->assessment)
+                            {{ \Carbon\Carbon::parse($submission->assessment->authorizeLaca->created_at)->translatedFormat('l, d F Y') }}
+                        @endif
+                    </span>
 
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="additional" name="type"
-                                    value="additional"
-                                    {{ $submission->authorizeLaca->type == 'additional' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="additional">Additional</label>
-
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input " type="checkbox" id="renewal" name="type"
-                                    value="renewal" {{ $submission->authorizeLaca->type == 'renewal' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="renewal">Renewal</label>
-                            </div>
+                    <!-- Authorization LACA -->
+                    <div class="border ">
+                        <div class=" text-center text-allign-center bg-light">
+                            <span class=" text-black d-block fs-5 fw-semibold">Authorization LACA</span>
+                            <span class=" text-muted ">(fill by quality inspector)</span>
                         </div>
-
-                        <div class="row align-items-center">
-                            <label for="no" class="col-sm-4 col-form-label">No.</label>
-                            <div class="col-sm-8 ">
-                                {{ $submission->authorizeLaca->no }}
+                        <hr class="my-0">
+                        <div class="p-2">
+                            <div class="d-flex flex-wrap gap-3">
+                                @php
+                                    $typeChecked = optional($submission->assessment->authorizeLaca)->type;
+                                @endphp
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="initial" name="type"
+                                        value="initial" {{ $typeChecked === 'initial' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="initial">Initial</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="additional" name="type"
+                                        value="additional" {{ $typeChecked === 'additional' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="additional">Additional</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="renewal" name="type"
+                                        value="renewal" {{ $typeChecked === 'renewal' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="renewal">Renewal</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row align-items-center">
-                            <label for="validy" class="col-sm-4 col-form-label">Validy</label>
-                            <div class="col-sm-8">
-                                {{ $submission->authorizeLaca->validy }}
+                            <div class="row align-items-center mt-3">
+                                <label for="no" class="col-sm-4 col-form-label">No.</label>
+                                <div class="col-sm-8">
+                                    {{ optional($submission->assessment->authorizeLaca)->no ?? '-' }}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row align-items-center">
-                            <label for="scope" class="col-sm-4 col-form-label">Scope</label>
-                            <div class="col-sm-8 align-items-center ">
-                                <div class="d-flex flex-wrap gap-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="mr">MR</label>
-                                        <input class="form-check-input " type="checkbox" id="mr" name="mr"
-                                            value="1" {{ $submission->authorizeLaca->mr == true ? 'checked' : '' }}>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" id="rii" name="rii"
-                                            value="1" {{ $submission->authorizeLaca->rii == true ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="rii">RII</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" id="etops" name="etops"
-                                            value="1"
-                                            {{ $submission->authorizeLaca->etops == true ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="etops">ETOPS</label>
+                            <div class="row align-items-center mt-3">
+                                <label for="validy" class="col-sm-4 col-form-label">Validity</label>
+                                <div class="col-sm-8">
+                                    {{ optional($submission->assessment->authorizeLaca)->validy ?? '-' }}
+                                </div>
+                            </div>
+
+                            <div class="row  mt-3">
+                                <label for="scope" class="col-sm-4 col-form-label">Scope</label>
+                                <div class="col-sm-8 mt-2">
+                                    @php
+                                        $scope = optional($submission->assessment->authorizeLaca);
+                                    @endphp
+                                    <div class="d-flex flex-wrap gap-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="mr" name="scope[mr]"
+                                                value="1" {{ $scope->mr ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="mr">MR</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="rii" name="scope[rii]"
+                                                value="1" {{ $scope->rii ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="rii">RII</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="etops"
+                                                name="scope[etops]" value="1" {{ $scope->etops ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="etops">ETOPS</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
+            @endif
+
 
             <div class="col-12">
                 <div class="row">
@@ -242,54 +250,63 @@
                                 </tr>
                             </tbody>
                         </table>
-
-                        <!-- MANDATORY TRAINING -->
-                        <table class="table border">
-                            <thead class="text-center table-light">
-                                <tr>
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Mandatory Training <br> Initial/Recurrent</th>
-                                    <th>Last Performed Year</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>HUMAN FACTOR TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->human_factory }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>SMS TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->sms_training }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">3</td>
-                                    <td>RVSM PBN TRAINING</td>
-                                    <td class="text-center">{{ $submission->mandatoryTraining->rvsm_pbn_training }}</td>
-                                </tr>
-                                @if ($submission->mandatoryTraining->etops_training != null)
+                        @if (Auth::user()->role !== 'pic_coordinator' && $submission->assessment)
+                            <!-- MANDATORY TRAINING -->
+                            <table class="table border">
+                                <thead class="text-center table-light">
                                     <tr>
-                                        <td class="text-center">4</td>
-                                        <td>ETOPS TRAINING (only for
-                                            applicant for A/C type effective
-                                            ETOPS)</td>
-                                        <td class="text-center">{{ $submission->mandatoryTraining->etops_training }}</td>
+                                        <th>
+                                            No.
+                                        </th>
+                                        <th>Mandatory Training <br> Initial/Recurrent</th>
+                                        <th>Last Performed Year</th>
                                     </tr>
-                                @endif
-                                @if ($submission->mandatoryTraining->rii_training != null)
+                                </thead>
+                                <tbody>
                                     <tr>
-                                        <td class="text-center">5</td>
-                                        <td>RII TRAINING (only for applicant
-                                            RII)</td>
-                                        <td class="text-center">{{ $submission->mandatoryTraining->rii_training }}</td>
+                                        <td class="text-center">1</td>
+                                        <td>HUMAN FACTOR TRAINING</td>
+                                        <td class="text-center">
+                                            {{ $submission->assessment->mandatoryTraining->human_factory }}</td>
                                     </tr>
-                                @endif
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>SMS TRAINING</td>
+                                        <td class="text-center">
+                                            {{ $submission->assessment->mandatoryTraining->sms_training }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>RVSM PBN TRAINING</td>
+                                        <td class="text-center">
+                                            {{ $submission->assessment->mandatoryTraining->rvsm_pbn_training }}
+                                        </td>
+                                    </tr>
+                                    @if ($submission->assessment->mandatoryTraining->etops_training != null)
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>ETOPS TRAINING (only for
+                                                applicant for A/C type effective
+                                                ETOPS)</td>
+                                            <td class="text-center">
+                                                {{ $submission->assessment->mandatoryTraining->etops_training }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    @if ($submission->assessment->mandatoryTraining->rii_training != null)
+                                        <tr>
+                                            <td class="text-center">5</td>
+                                            <td>RII TRAINING (only for applicant
+                                                RII)</td>
+                                            <td class="text-center">
+                                                {{ $submission->assessment->mandatoryTraining->rii_training }}
+                                            </td>
+                                        </tr>
+                                    @endif
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
 
                     <!-- LION AIR AIRCRAFT TYPE -->
@@ -328,7 +345,9 @@
                 </div>
             </div>
 
-            @if (Auth::user()->role !== 'pic_coordinator')
+            @if (Auth::user()->role !== 'pic_coordinator' &&
+                    $submission->pic_status !== 'rejected' &&
+                    $submission->assessment !== null)
                 <!-- assessment -->
                 <div class="mb-5">
                     <table class="table">
@@ -502,11 +521,11 @@
                 <div class="row fw-semibold">
                     <div class="col">
                         <p>({{ $submission->applicant->name }} ,
-                            {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat(' d F Y') }})
+                            {{ \Carbon\Carbon::parse($submission->submited_at)->translatedFormat(' d F Y') }})
                         </p>
                     </div>
                     <div class="col ">
-                        @if ($submission->pic_coodinator_id && $submission->pic_check_at)
+                        @if ($submission->pic_coordinator_id && $submission->pic_check_at)
                             ({{ $submission->pic_status == 'approved' ? 'Approved by:' : 'Rejected by:' }}
                             {{ $submission->picCoordinator->name }},
                             {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d M Y') }})
@@ -561,7 +580,7 @@
                             <span class="fw-semibold fs-1 bg-secondary py-2 px-4 rounded text-white">Not yet checked</span>
                         @endif
                     @else
-                        @if ($submission->pic_status && !$submission->assessment)
+                        @if (($submission->pic_status && !$submission->assessment) || $submission->assessment !== null)
                             <span
                                 class="fw-semibold fs-1 {{ $submission->pic_status == 'approved' ? 'bg-success' : 'bg-danger' }} py-2 px-4 rounded text-white">
                                 {{ Illuminate\Support\Str::of($submission->pic_status)->upper() }}</span>

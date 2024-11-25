@@ -2,11 +2,10 @@
 @section('title', 'Submission')
 
 @section('content')
-    <h2>PERSONNEL AUTHORIZED QUALIFICATION RECORD</h2>
     <div class="container">
+        <h2 class="mb-3">PERSONNEL AUTHORIZED QUALIFICATION RECORD</h2>
         <form action="{{ route('submission.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
             @if (session('error'))
                 @component('components.alert', ['type' => 'danger', 'message' => session('error')])
                 @endcomponent
@@ -17,8 +16,7 @@
             @endif
             <div class="row g-4">
                 <!-- Biodata -->
-                <div class="col-md-8">
-                    <h3>Biodata</h3>
+                <div class="col-md-12">
                     <div class="d-flex flex-column flex-md-row gap-3">
                         <div class="border text-white p-2 text-center flex-shrink-0"
                             style="min-width: 150px; cursor: pointer;" id="fileUploadBox">
@@ -123,80 +121,7 @@
                     </div>
                 </div>
 
-                <!-- Authorization LACA -->
-                <div class="col-md-4">
-                    <h3>Authorization LACA</h3>
-                    <div class="d-flex flex-wrap gap-3 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input " type="radio" id="initial" name="type" value="initial">
-                            <label class="form-check-label" for="initial">Initial</label>
-
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="additional" name="type"
-                                value="additional">
-                            <label class="form-check-label" for="additional">Additional</label>
-
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input " type="radio" id="renewal" name="type"
-                                value="renewal">
-                            <label class="form-check-label" for="renewal">Renewal</label>
-                        </div>
-                        @error('type')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="no" class="col-sm-4 col-form-label">No.</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control @error('no') is-invalid @enderror" name="no"
-                                id="no" placeholder="Input your laca no" value="{{ old('no') }}">
-                            @error('no')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="validy" class="col-sm-4 col-form-label">Validy</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control @error('validy') is-invalid @enderror"
-                                name="validy" id="validy" placeholder="Input your validity"
-                                value="{{ old('validy') }}">
-                            @error('validy')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="scope" class="col-sm-4 col-form-label">Scope</label>
-                        <div class="col-sm-8 align-items-center ">
-                            <div class="d-flex flex-wrap gap-3">
-                                <div class="form-check">
-                                    <input class="form-check-input " type="checkbox" id="mr" name="mr"
-                                        value="1">
-                                    <label class="form-check-label" for="mr">MR</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input " type="checkbox" id="rii" name="rii"
-                                        value="1">
-                                    <label class="form-check-label" for="rii">RII</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input " type="checkbox" id="etops" name="etops"
-                                        value="1">
-                                    <label class="form-check-label" for="etops">ETOPS</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- TYPE OF RATING TRAINING &  -->
+                <!-- TYPE OF RATING TRAINING & BASIC LICENSE -->
                 <div class="col-12">
                     <div class="row">
                         <!-- TYPE OF RATING TRAINING -->
@@ -215,7 +140,7 @@
                                                         <input type="text" name="course"
                                                             class="form-control @error('type_of_rating_training.*.course') is-invalid @enderror"
                                                             id="course" placeholder="Input your course"
-                                                            value="{{ old('type_of_rating_training.0.course') }}">
+                                                            value="{{ old('type_of_rating_training.*.course') }}">
                                                         <label for="course">Course</label>
                                                         @error('type_of_rating_training.*.course')
                                                             <span class="text-danger">{{ $message }}</span>
@@ -228,7 +153,7 @@
                                                         <input type="number" name="year"
                                                             class="form-control @error('type_of_rating_training.*.year') is-invalid @enderror"
                                                             id="year" placeholder="Year"
-                                                            value="{{ old('type_of_rating_training.0.year') }}">
+                                                            value="{{ old('type_of_rating_training.*.year') }}">
                                                         <label for="year">Year</label>
                                                         @error('type_of_rating_training.*.year')
                                                             <span class="text-danger">{{ $message }}</span>
@@ -256,7 +181,6 @@
                                     </button>
                                 </div>
                             </div>
-
                             <!-- End Repeater Section -->
                         </div>
 
@@ -270,26 +194,26 @@
                                         <!-- Item Template -->
                                         <div data-repeater-item class="mb-2 rounded">
                                             <div class="row align-items-center">
-                                                <!-- category -->
+                                                <!-- Category -->
                                                 <div class="col-md-5 mb-2 mb-md-0">
                                                     <div class="form-floating">
                                                         <input type="text" name="category"
                                                             class="form-control @error('basic_license.*.category') is-invalid @enderror"
                                                             id="category" placeholder="Input your category"
-                                                            value="{{ old('basic_license.0.category') }}">
+                                                            value="{{ old('basic_license.*.category') }}">
                                                         <label for="category">Category</label>
                                                         @error('basic_license.*.category')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <!-- card_no -->
+                                                <!-- Card No -->
                                                 <div class="col-md-5 mb-2 mb-md-0">
                                                     <div class="form-floating">
                                                         <input type="text" name="card_no"
                                                             class="form-control @error('basic_license.*.card_no') is-invalid @enderror"
                                                             id="card_no" placeholder="Card No."
-                                                            value="{{ old('basic_license.0.card_no') }}">
+                                                            value="{{ old('basic_license.*.card_no') }}">
                                                         <label for="card_no">Card No.</label>
                                                         @error('basic_license.*.card_no')
                                                             <span class="text-danger">{{ $message }}</span>
@@ -317,11 +241,11 @@
                                     </button>
                                 </div>
                             </div>
-
                             <!-- End Repeater Section -->
                         </div>
                     </div>
                 </div>
+
 
                 <div class="col-12">
                     <div class="row">
@@ -349,77 +273,11 @@
                                     @enderror
                                 </div>
                             </div>
-                            <h3>Mandatory Training</h3>
-                            <div class="mb-3 row">
-                                <label for="human_factory" class="col-sm-4 col-form-label">Human Factor
-                                    Training</label>
-                                <div class="col-sm-8">
-                                    <input type="text"
-                                        class="form-control @error('human_factory') is-invalid @enderror"
-                                        name="human_factory" id="human_factory"
-                                        placeholder="Input your last performed year" value="{{ old('human_factory') }}">
-                                    @error('human_factory')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="sms_training" class="col-sm-4 col-form-label">SMS
-                                    TRAINING</label>
-                                <div class="col-sm-8">
-                                    <input type="text"
-                                        class="form-control @error('sms_training') is-invalid @enderror"
-                                        name="sms_training" id="sms_training"
-                                        placeholder="Input your last performed year" value="{{ old('sms_training') }}">
-                                    @error('sms_training')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="rvsm_pbn_training" class="col-sm-4 col-form-label">RVSM PBN
-                                    TRAINING</label>
-                                <div class="col-sm-8">
-                                    <input type="text"
-                                        class="form-control @error('rvsm_pbn_training') is-invalid @enderror"
-                                        name="rvsm_pbn_training" id="rvsm_pbn_training"
-                                        placeholder="Input your last performed year"
-                                        value="{{ old('rvsm_pbn_training') }}">
-                                    @error('rvsm_pbn_training')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="etops_training" class="col-sm-4 col-form-label">ETOPS TRAINING
-                                    (only for applicant for A/C type effective ETOPS)</label>
-                                <div class="col-sm-8">
-                                    <input type="text"
-                                        class="form-control @error('etops_training') is-invalid @enderror"
-                                        name="etops_training" id="etops_training"
-                                        placeholder="Input your last performed year" value="{{ old('etops_training') }}">
-                                    @error('etops_training')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="rii_training" class="col-sm-4 col-form-label">RII TRAINING
-                                    (only for applicant RII)</label>
-                                <div class="col-sm-8">
-                                    <input type="text"
-                                        class="form-control @error('rii_training') is-invalid @enderror"
-                                        name="rii_training" id="rii_training"
-                                        placeholder="Input your last performed year" value="{{ old('rii_training') }}">
-                                    @error('rii_training')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+
                         </div>
 
+                        <!-- Lion Air Aircraft Type -->
                         <div class="col-md-6">
-                            <!-- Lion Air Aircraft Type -->
                             <h3 class="mb-4">Lion Air Aircraft Type</h3>
                             <!-- Repeater Section -->
                             <div class="repeater">
@@ -428,7 +286,7 @@
                                         <!-- Item Template -->
                                         <div data-repeater-item class="mb-2 rounded">
                                             <div class="row align-items-center">
-                                                <!-- type -->
+                                                <!-- Type -->
                                                 <div class="col-md-10 mb-2 mb-md-0">
                                                     <div class="form-floating">
                                                         <input type="text" name="air_craft_type"
@@ -463,9 +321,9 @@
                                     </button>
                                 </div>
                             </div>
-
                             <!-- End Repeater Section -->
                         </div>
+
 
                     </div>
 

@@ -38,8 +38,6 @@
                         </td>
                         <td>
                             <a href="{{ route('pic.show', $history->id) }}" class="btn btn-sm btn-outline-secondary">View</a>
-
-
                         </td>
                     </tr>
 

@@ -15,6 +15,7 @@
     <div class="container">
         <form action="{{ route('quality-inspector.update', $submission->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row g-4">
                 <h2>Detail Submission {{ $submission->personnel->name }}</h2>
                 <!-- Biodata -->
@@ -90,19 +91,22 @@
                             <div class="d-flex flex-wrap gap-3 mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input " type="radio" id="initial" name="type"
-                                        value="initial">
+                                        value="initial"
+                                        {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->type == 'initial') || old('type') == 'initial' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="initial">Initial</label>
 
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="additional" name="type"
-                                        value="additional">
+                                        value="additional"
+                                        {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->type == 'additional') || old('type') == 'additional' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="additional">Additional</label>
 
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input " type="radio" id="renewal" name="type"
-                                        value="renewal">
+                                        value="renewal"
+                                        {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->type == 'renewal') || old('type') == 'renewal' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="renewal">Renewal</label>
                                 </div>
                                 @error('type')
@@ -115,7 +119,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control @error('no') is-invalid @enderror"
                                         name="no" id="no" placeholder="Input your laca no"
-                                        value="{{ old('no') }}">
+                                        value="{{ old('no', $submission->assessment->authorizeLaca->no) }}">
                                     @error('no')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -127,7 +131,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control @error('validy') is-invalid @enderror"
                                         name="validy" id="validy" placeholder="Input your validity"
-                                        value="{{ old('validy') }}">
+                                        value="{{ old('validy', $submission->assessment->authorizeLaca->validy) }}">
                                     @error('validy')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -139,21 +143,25 @@
                                 <div class="col-sm-8 align-items-center ">
                                     <div class="d-flex flex-wrap gap-4 pt-2">
                                         <div class="form-check">
-                                            <input class="form-check-input " type="checkbox" id="mr"
-                                                name="mr" value="1">
+                                            <input class="form-check-input" type="checkbox" id="mr"
+                                                name="mr" value="1"
+                                                {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->mr) || old('mr') == '1' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="mr">MR</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input " type="checkbox" id="rii"
-                                                name="rii" value="1">
+                                            <input class="form-check-input" type="checkbox" id="rii"
+                                                name="rii" value="1"
+                                                {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->rii) || old('rii') == '1' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="rii">RII</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input " type="checkbox" id="etops"
-                                                name="etops" value="1">
+                                            <input class="form-check-input" type="checkbox" id="etops"
+                                                name="etops" value="1"
+                                                {{ (isset($submission->assessment->authorizeLaca) && $submission->assessment->authorizeLaca->etops) || old('etops') == '1' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="etops">ETOPS</label>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -257,7 +265,7 @@
                             <table class="table border mb-4">
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="table-light">License No.</th>
+                                        <th scope="row" width="50%" class="table-light">AME License No.</th>
                                         <td>{{ $submission->ameLicense->license_no }}</td>
                                     </tr>
                                     <tr>
@@ -276,7 +284,8 @@
                                     <input type="text"
                                         class="form-control @error('human_factory') is-invalid @enderror"
                                         name="human_factory" id="human_factory"
-                                        placeholder="Input your last performed year" value="{{ old('human_factory') }}">
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('human_factory', $submission->assessment->mandatoryTraining->human_factory) }}">
                                     @error('human_factory')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -288,7 +297,8 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control @error('sms_training') is-invalid @enderror"
                                         name="sms_training" id="sms_training"
-                                        placeholder="Input your last performed year" value="{{ old('sms_training') }}">
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('sms_training', $submission->assessment->mandatoryTraining->sms_training) }}">
                                     @error('sms_training')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -302,7 +312,7 @@
                                         class="form-control @error('rvsm_pbn_training') is-invalid @enderror"
                                         name="rvsm_pbn_training" id="rvsm_pbn_training"
                                         placeholder="Input your last performed year"
-                                        value="{{ old('rvsm_pbn_training') }}">
+                                        value="{{ old('rvsm_pbn_training', $submission->assessment->mandatoryTraining->rvsm_pbn_training) }}">
                                     @error('rvsm_pbn_training')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -315,7 +325,8 @@
                                     <input type="text"
                                         class="form-control @error('etops_training') is-invalid @enderror"
                                         name="etops_training" id="etops_training"
-                                        placeholder="Input your last performed year" value="{{ old('etops_training') }}">
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('etops_training', $submission->assessment->mandatoryTraining->etops_training) }}">
                                     @error('etops_training')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -327,7 +338,8 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control @error('rii_training') is-invalid @enderror"
                                         name="rii_training" id="rii_training"
-                                        placeholder="Input your last performed year" value="{{ old('rii_training') }}">
+                                        placeholder="Input your last performed year"
+                                        value="{{ old('rii_training', $submission->assessment->mandatoryTraining->rii_training) }}">
                                     @error('rii_training')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -397,7 +409,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_1') is-invalid @enderror"
                                         name="assessment_material_1" id="assessment_material_1"
-                                        value="{{ old('assessment_material_1') }}">
+                                        value="{{ old('assessment_material_1', $submission->assessment->assessment_material_1) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_1')
@@ -419,7 +431,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_2') is-invalid @enderror"
                                         name="assessment_material_2" id="assessment_material_2"
-                                        value="{{ old('assessment_material_2') }}">
+                                        value="{{ old('assessment_material_2', $submission->assessment->assessment_material_2) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_2')
@@ -441,7 +453,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_3') is-invalid @enderror"
                                         name="assessment_material_3" id="assessment_material_3"
-                                        value="{{ old('assessment_material_3') }}">
+                                        value="{{ old('assessment_material_3', $submission->assessment->assessment_material_3) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_3')
@@ -463,7 +475,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_4') is-invalid @enderror"
                                         name="assessment_material_4" id="assessment_material_4"
-                                        value="{{ old('assessment_material_4') }}">
+                                        value="{{ old('assessment_material_4', $submission->assessment->assessment_material_4) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_4')
@@ -485,7 +497,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_5') is-invalid @enderror"
                                         name="assessment_material_5" id="assessment_material_5"
-                                        value="{{ old('assessment_material_5') }}">
+                                        value="{{ old('assessment_material_5', $submission->assessment->assessment_material_5) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_5')
@@ -513,7 +525,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_6') is-invalid @enderror"
                                         name="assessment_material_6" id="assessment_material_6"
-                                        value="{{ old('assessment_material_6') }}">
+                                        value="{{ old('assessment_material_6', $submission->assessment->assessment_material_6) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_6')
@@ -535,7 +547,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_7') is-invalid @enderror"
                                         name="assessment_material_7" id="assessment_material_7"
-                                        value="{{ old('assessment_material_7') }}">
+                                        value="{{ old('assessment_material_7', $submission->assessment->assessment_material_7) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_7')
@@ -557,7 +569,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_8') is-invalid @enderror"
                                         name="assessment_material_8" id="assessment_material_8"
-                                        value="{{ old('assessment_material_8') }}">
+                                        value="{{ old('assessment_material_8', $submission->assessment->assessment_material_8) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_8')
@@ -580,7 +592,7 @@
                                     <input type="number"
                                         class="form-control value-assessment @error('assessment_material_9') is-invalid @enderror"
                                         name="assessment_material_9" id="assessment_material_9"
-                                        value="{{ old('assessment_material_9') }}">
+                                        value="{{ old('assessment_material_9', $submission->assessment->assessment_material_9) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('assessment_material_9')
@@ -600,7 +612,8 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="total_result" id="total_result"
                                         placeholder="Result" aria-label="Total Result" min="0" max="100"
-                                        disabled>
+                                        disabled
+                                        value="{{ old('total_result', $submission->assessment->assessment_result) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </td>
@@ -802,31 +815,30 @@
                 "etops": "etops_training",
             };
 
-            // Menambahkan event listener pada setiap checkbox
-            checkboxes.forEach((checkbox) => {
-                checkbox.addEventListener("change", function() {
-                    const fieldId = mappings[this.id];
+            // Fungsi untuk menampilkan atau menyembunyikan elemen berdasarkan checkbox
+            const toggleFieldVisibility = (checkbox) => {
+                const fieldId = mappings[checkbox.id];
 
-                    if (fieldId) {
-                        const field = document.getElementById(fieldId).closest(".row");
+                if (fieldId) {
+                    const field = document.getElementById(fieldId)?.closest(".row");
 
-                        // Tampilkan atau sembunyikan field berdasarkan checkbox status
-                        if (this.checked) {
-                            field.style.display = "flex";
-                        } else {
-                            field.style.display = "none";
-                        }
+                    if (field) {
+                        // Tampilkan elemen jika checkbox dicentang
+                        field.style.display = checkbox.checked ? "flex" : "none";
                     }
+                }
+            };
+
+            // Menambahkan event listener untuk setiap checkbox
+            checkboxes.forEach((checkbox) => {
+                // Atur visibilitas saat halaman dimuat
+                toggleFieldVisibility(checkbox);
+
+                // Tambahkan event listener untuk perubahan status
+                checkbox.addEventListener("change", function() {
+                    toggleFieldVisibility(this);
                 });
             });
-
-            // Menyembunyikan semua elemen terkait pada awal
-            for (const fieldId in mappings) {
-                const field = document.getElementById(mappings[fieldId]).closest(".row");
-                if (field) {
-                    field.style.display = "none";
-                }
-            }
         });
     </script>
 @endpush

@@ -52,8 +52,13 @@
                         <td>
                             <a href="{{ route('quality-inspector.show', $history->id) }}"
                                 class="btn btn-sm btn-outline-secondary">View</a>
-                            @if ($history->assessment === null)
+                            @if ($history->assessment)
                                 <a href="{{ route('quality-inspector.edit', $history->id) }}"
+                                    class="btn btn-sm btn-outline-secondary">Update</a>
+                            @endif
+
+                            @if ($history->assessment === null)
+                                <a href="{{ route('quality-inspector.create', $history->id) }}"
                                     class="btn btn-sm btn-outline-secondary">Assessment</a>
                             @endif
                         </td>

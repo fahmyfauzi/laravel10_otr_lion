@@ -11,7 +11,7 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Submitted Date</th>
                     <th scope="col">Status PIC</th>
@@ -21,12 +21,10 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $no = 1;
-                @endphp
+
                 @forelse ($histories as $history)
                     <tr>
-                        <td>{{ $no++ }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $history->personnel->name }}</td>
                         <td>{{ \Carbon\Carbon::parse($history->submited_at)->translatedFormat('l, d F Y') }} </td>
                         <td><span
@@ -51,14 +49,15 @@
                         </td>
                         <td>
                             @if ($history->assessment !== null)
-                                {{ $history->assessment->assessment_result }}
+                                {{ $history->assessment->assessment_result }} %
                             @else
                                 -
                             @endif
                         </td>
 
                         <td>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{{ route('submission.show', $history->id) }}"
+                                class="btn btn-sm btn-outline-secondary">View</a>
                             <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
                             <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
                         </td>

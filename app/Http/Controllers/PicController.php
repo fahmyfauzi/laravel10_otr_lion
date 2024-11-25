@@ -27,7 +27,7 @@ class PicController extends Controller
     {
         $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining'])->find($id);
 
-        return view('pic-coordinator.show', [
+        return view('partials.show', [
             'submission' => $submission
         ]);
     }

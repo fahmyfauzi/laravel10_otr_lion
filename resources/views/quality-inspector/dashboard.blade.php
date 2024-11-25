@@ -11,7 +11,7 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Date Submitted</th>
                     <th scope="col">Status</th>
@@ -32,7 +32,7 @@
                             @if ($history->assessment !== null)
                                 <span
                                     class="badge text-bg-{{ $history->assessment->status === 'pass' ? 'success' : ($history->assessment->status === 'fail' ? 'danger' : 'warning') }}">
-                                    {{ \Illuminate\Support\Str::camel($history->pic_status) }}
+                                    {{ \Illuminate\Support\Str::upper($history->assessment->status) }}
                                 </span>
                             @else
                                 <span class="badge text-bg-secondary">
@@ -50,29 +50,14 @@
 
                         </td>
                         <td>
-                            <a href="" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{{ route('quality-inspector.show', $history->id) }}"
+                                class="btn btn-sm btn-outline-secondary">View</a>
                             @if ($history->assessment === null)
                                 <a href="{{ route('quality-inspector.edit', $history->id) }}"
                                     class="btn btn-sm btn-outline-secondary">Assessment</a>
                             @endif
                         </td>
                     </tr>
-                    @component('components.confirmation-modal', [
-                        'message' => 'Are you sure you can refuse the application?',
-                        'modalId' => 'rejectModal',
-                        'title' => 'Confirmation Reject',
-                        'action' => route('pic.update', $history->id),
-                        'statusValue' => 'rejected',
-                    ])
-                    @endcomponent
-                    @component('components.confirmation-modal', [
-                        'message' => 'Are you sure you can approve the application?',
-                        'modalId' => 'approvedModal',
-                        'title' => 'Confirmation Approved',
-                        'action' => route('pic.update', $history->id),
-                        'statusValue' => 'approved',
-                    ])
-                    @endcomponent
                 @empty
                     <td colspan="5" class="text-center">No Data</td>
                 @endforelse

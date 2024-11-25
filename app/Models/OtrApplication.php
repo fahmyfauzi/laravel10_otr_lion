@@ -46,7 +46,7 @@ class OtrApplication extends Model
 
     public function applicant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function picCoordinator()

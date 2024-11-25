@@ -191,9 +191,6 @@
                                     <label class="form-check-label" for="etops">ETOPS</label>
                                 </div>
                             </div>
-
-                            <span class="text-danger">please choose one</span>
-
                         </div>
                     </div>
 

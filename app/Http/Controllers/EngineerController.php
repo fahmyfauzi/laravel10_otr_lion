@@ -207,7 +207,11 @@ class EngineerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $submission = OtrApplication::with(['personnel', 'authorizeLaca', 'ratingTrainings', 'basicLicenses', 'ameLicense', 'lionAirAirCraftTypes', 'mandatoryTraining', 'assessment', 'assessment.qualityInspector'])->find($id);
+
+        return view('partials.show', [
+            'submission' => $submission
+        ]);
     }
 
     /**

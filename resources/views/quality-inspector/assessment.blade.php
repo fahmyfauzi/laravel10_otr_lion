@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', 'Assessment')
 
 @section('content')
 
@@ -571,8 +571,8 @@
                             <td>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="total_result" id="total_result"
-                                        placeholder="Enter total result" aria-label="Total Result" min="0"
-                                        max="100" disabled>
+                                        placeholder="Result" aria-label="Total Result" min="0" max="100"
+                                        disabled>
                                     <span class="input-group-text">%</span>
                                 </div>
                             </td>
@@ -587,39 +587,55 @@
 
         </div>
 
-        <div class="d-flex row justify-content-between">
-            <div class="col-md-4 text-center">
-                <p>Applicant</p>
-                <p>({{ $submission->personnel->name }} ,
-                    {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat(' d F Y') }})</p>
-                <p>Engineer</p>
+        <!-- signature -->
+        <div class="justify-content-between text-center">
+            <div class="row">
+                <div class="col">
+                    <p>Applicant</p>
+                </div>
+                <div class="col">
+                    Proposed and <br>
+                    Check By
+                </div>
+                <div class="col">
+                    <p>Assessment by,</p>
+                </div>
             </div>
-
-            <div class="col-md-4 text-center">
-                <p>
-                    @if ($submission->pic_status == 'rejected')
-                        Rejected and <br>
-                        Check By
-                    @else
-                        Proposed and <br>
-                        Check By
-                    @endif
-                </p>
-                <p>
-
+            <div class="row fw-semibold">
+                <div class="col">
+                    <p>({{ $submission->applicant->name }} ,
+                        {{ \Carbon\Carbon::parse($submission->authorizeLaca->created_at)->translatedFormat(' d F Y') }})
+                    </p>
+                </div>
+                <div class="col ">
                     @if ($submission->pic_coodinator_id && $submission->pic_check_at)
-                        ({{ $submission->picCoordinator->name }},
-                        {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d F Y') }})
+                        ({{ $submission->pic_status == 'approved' ? 'Approved by:' : 'Rejected by:' }}
+                        {{ $submission->picCoordinator->name }},
+                        {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d M Y') }})
                     @else
                         ( )
                     @endif
-                </p>
-                <p>PIC/ Coordinator</p>
+                </div>
+                <div class="col">
+                    @if ($submission->assessment)
+                        <p>( {{ $submission->assessment->status == 'pass' ? 'Pass by:' : 'Fail by:' }}
+                            {{ $submission->assessment->qualityInspector->name }},
+                            {{ \Carbon\Carbon::parse($submission->pic_check_at)->translatedFormat(' d F Y') }})</p>
+                    @else
+                        ( )
+                    @endif
+                </div>
             </div>
-            <div class="col-md-4 text-center">
-                <p>Assessment by,</p>
-                <p>({{ $submission->personnel->name }})</p>
-                <p>Quality Inspector</p>
+            <div class="row">
+                <div class="col">
+                    <p>Engineer</p>
+                </div>
+                <div class="col">
+                    <p>PIC/ Coordinator</p>
+                </div>
+                <div class="col">
+                    <p>Quality Inspector</p>
+                </div>
             </div>
         </div>
 

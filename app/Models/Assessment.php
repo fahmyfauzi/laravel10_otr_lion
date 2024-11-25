@@ -29,4 +29,9 @@ class Assessment extends Model
     protected $casts = [
         'total_result' => 'float',
     ];
+
+    public function qualityInspector()
+    {
+        return $this->belongsTo(User::class, 'quality_inspector_id');
+    }
 }

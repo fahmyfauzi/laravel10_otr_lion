@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('title', 'Login')
 @section('content')
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -29,15 +29,10 @@
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password"
                 required>
             <label for="floatingPassword">Password</label>
-
         </div>
-
-        {{-- <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                Remember me
-            </label>
-        </div> --}}
         <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        <p class="mt-3 text-center">
+            Don't have an account? <a href="{{ route('register') }}">Register</a>
+        </p>
     </form>
 @endsection

@@ -37,6 +37,11 @@ class OtrApplication extends Model
         ]);
     }
 
+    public function scopeWithAssessmentPersonnel($query)
+    {
+        return $query->with(['personnel', 'assessment']);
+    }
+
     public function personnel()
     {
         return $this->belongsTo(Personnel::class);

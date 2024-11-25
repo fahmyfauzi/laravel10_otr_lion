@@ -27,7 +27,7 @@
                             <svg class="bi">
                                 <use xlink:href="#file-earmark" />
                             </svg>
-                            Submission
+                            Create Submission
                         </a>
                     </li>
                 @endif

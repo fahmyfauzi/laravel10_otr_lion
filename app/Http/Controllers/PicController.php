@@ -13,7 +13,7 @@ class PicController extends Controller
      */
     public function index()
     {
-        $histories = OtrApplication::with(['personnel', 'assessment'])->latest()->get();
+        $histories = OtrApplication::withAssessmentPersonnel()->latest()->paginate(15);
         return view('pic-coordinator.dashboard', [
             'histories' => $histories
         ]);

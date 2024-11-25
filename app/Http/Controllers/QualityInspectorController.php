@@ -18,7 +18,7 @@ class QualityInspectorController extends Controller
      */
     public function index()
     {
-        $histories = OtrApplication::with(['personnel', 'assessment'])->where('pic_status', 'approved')->orderBy('pic_check_at', 'desc')->latest()->get();
+        $histories = OtrApplication::withAssessmentPersonnel()->where('pic_status', 'approved')->orderBy('pic_check_at', 'desc')->latest()->paginate(15);
 
         return view('quality-inspector.dashboard', [
             'histories' => $histories

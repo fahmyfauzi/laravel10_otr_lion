@@ -24,7 +24,7 @@
 
                 @forelse ($histories as $history)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $loop->iteration + ($histories->currentPage() - 1) * $histories->perPage() }}</td>
                         <td>{{ $history->personnel->name }}</td>
                         <td>{{ \Carbon\Carbon::parse($history->submited_at)->translatedFormat('l, d F Y') }} </td>
                         <td><span
@@ -68,6 +68,10 @@
 
             </tbody>
         </table>
+        <!-- Tampilkan Navigasi Pagination -->
+    </div>
+    <div class="d-flex justify-content-end mt-2 me-auto">
+        {{ $histories->links() }}
     </div>
 @endsection
 

@@ -11,7 +11,7 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">No.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Date Submitted</th>
                     <th scope="col">Status</th>
@@ -19,12 +19,10 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $no = 1;
-                @endphp
+
                 @forelse ($histories as $history)
                     <tr>
-                        <td>{{ $no++ }}</td>
+                        <td>{{ $loop->iteration + ($histories->currentPage() - 1) * $histories->perPage() }}</td>
                         <td>{{ $history->personnel->name }}</td>
                         <td> {{ \Carbon\Carbon::parse($history->submited_at)->translatedFormat('l, d F Y') }}</td>
                         <td>
@@ -48,6 +46,9 @@
 
             </tbody>
         </table>
+    </div>
+    <div class="d-flex justify-content-end mt-2 me-auto">
+        {{ $histories->links() }}
     </div>
 @endsection
 

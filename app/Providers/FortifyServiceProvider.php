@@ -31,6 +31,9 @@ class FortifyServiceProvider extends ServiceProvider
                 if ($request->user()->role  === 'pic_coordinator') {
                     return redirect()->route('pic.index');
                 }
+                if ($request->user()->role  === 'quality_inspector') {
+                    return redirect()->route('quality-inspector.index');
+                }
             }
         });
     }

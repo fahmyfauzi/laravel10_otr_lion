@@ -71,6 +71,6 @@ class OtrApplication extends Model
 
     public function assessment()
     {
-        return $this->belongsTo(Asessment::class);
+        return $this->belongsTo(Assessment::class);
     }
 }

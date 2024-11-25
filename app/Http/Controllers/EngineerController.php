@@ -21,7 +21,7 @@ class EngineerController extends Controller
      */
     public function index()
     {
-        $histories = OtrApplication::with(['personnel', 'assessment'])->where('user_id', Auth::user()->id)->get();
+        $histories = OtrApplication::with(['personnel', 'assessment'])->where('user_id', Auth::user()->id)->latest()->get();
 
 
         return view('engineer.dashboard', [

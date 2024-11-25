@@ -13,9 +13,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Submitted Date</th>
-                    <th scope="col">Status PIC</th>
-                    <th scope="col">Status Quality Inspector</th>
+                    <th scope="col">Date Submitted</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Result</th>
                     <th scope="col"></th>
                 </tr>
@@ -28,43 +27,54 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $history->personnel->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($history->submited_at)->translatedFormat('l, d F Y') }} </td>
-                        <td><span
-                                class="badge text-bg-{{ $history->pic_status === 'approved' ? 'success' : ($history->pic_status === 'rejected' ? 'danger' : 'warning') }}">
-                                {{ ucfirst(\Illuminate\Support\Str::camel($history->pic_status ?? 'Process')) }}
-                            </span></td>
+                        <td> {{ \Carbon\Carbon::parse($history->submited_at)->translatedFormat('l, d F Y') }}</td>
                         <td>
                             @if ($history->assessment !== null)
                                 <span
                                     class="badge text-bg-{{ $history->assessment->status === 'pass' ? 'success' : ($history->assessment->status === 'fail' ? 'danger' : 'warning') }}">
-                                    {{ Ucfirst(\Illuminate\Support\Str::camel($history->assessment->status)) }}
-                                </span>
-                            @elseif ($history->assessment === null && $history->pic_status === 'rejected')
-                                <span class="badge text-bg-danger">
-                                    Fail
+                                    {{ \Illuminate\Support\Str::camel($history->pic_status) }}
                                 </span>
                             @else
-                                <span class="badge text-bg-warning">
-                                    Waiting for Assessment
+                                <span class="badge text-bg-secondary">
+                                    Not Yet Assessment
                                 </span>
                             @endif
                         </td>
                         <td>
                             @if ($history->assessment !== null)
-                                {{ $history->assessment->assessment_result }}
+                                {{ $history->assessment->assessment_result }} %
                             @else
                                 -
                             @endif
                         </td>
 
+                        </td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Update</a>
+                            <a href="" class="btn btn-sm btn-outline-secondary">View</a>
+                            @if ($history->assessment === null)
+                                <a href="{{ route('quality-inspector.edit', $history->id) }}"
+                                    class="btn btn-sm btn-outline-secondary">Assessment</a>
+                            @endif
                         </td>
                     </tr>
+                    @component('components.confirmation-modal', [
+                        'message' => 'Are you sure you can refuse the application?',
+                        'modalId' => 'rejectModal',
+                        'title' => 'Confirmation Reject',
+                        'action' => route('pic.update', $history->id),
+                        'statusValue' => 'rejected',
+                    ])
+                    @endcomponent
+                    @component('components.confirmation-modal', [
+                        'message' => 'Are you sure you can approve the application?',
+                        'modalId' => 'approvedModal',
+                        'title' => 'Confirmation Approved',
+                        'action' => route('pic.update', $history->id),
+                        'statusValue' => 'approved',
+                    ])
+                    @endcomponent
                 @empty
-                    <td colspan="7" class="text-center">No Data</td>
+                    <td colspan="5" class="text-center">No Data</td>
                 @endforelse
 
 

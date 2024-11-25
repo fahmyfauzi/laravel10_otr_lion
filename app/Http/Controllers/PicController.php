@@ -45,6 +45,6 @@ class PicController extends Controller
         $submission->pic_check_at = now();
         $submission->save();
 
-        return redirect()->route('pic.show', $id);
+        return redirect()->route('pic.index')->with('success', 'Status updated successfully');
     }
 }

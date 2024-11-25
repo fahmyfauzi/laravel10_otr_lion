@@ -10,7 +10,11 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                        href="{{ auth()->user()->role === 'pic_coordinator' ? route('pic.index') : route('submission.index') }}">
+                        href="{{ auth()->user()->role === 'pic_coordinator'
+                            ? route('pic.index')
+                            : (auth()->user()->role === 'quality_inspector'
+                                ? route('quality-inspector.index')
+                                : route('submission.index')) }}">
                         <svg class="bi">
                             <use xlink:href="#house-fill" />
                         </svg>

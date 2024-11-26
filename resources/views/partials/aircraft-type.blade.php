@@ -1,4 +1,4 @@
-      <table class="table border">
+      <table class="table table-bordered">
           <thead class="table-light text-center">
               <tr>
                   <th>

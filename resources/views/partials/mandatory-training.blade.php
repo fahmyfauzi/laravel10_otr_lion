@@ -1,5 +1,5 @@
     <!-- MANDATORY TRAINING -->
-    <table class="table border">
+    <table class="table table-bordered">
         <thead class="text-center table-light">
             <tr>
                 <th>

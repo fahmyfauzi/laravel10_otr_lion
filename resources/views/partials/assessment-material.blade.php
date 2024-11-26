@@ -1,10 +1,10 @@
 <!-- assessment -->
 <div class="mb-5">
-    <table class="table">
+    <table class="table table-bordered">
         <thead class="table-light">
             <tr>
                 <th colspan="2">Assessment Material</th>
-                <th class="text-center">Percentage Value</th>
+                <th class="text-center">Percentage <br> Value</th>
             </tr>
         </thead>
         <tbody>

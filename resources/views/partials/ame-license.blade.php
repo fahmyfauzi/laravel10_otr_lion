@@ -1,4 +1,4 @@
-<table class="table border mb-4">
+<table class="table table-bordered mb-4">
     <tbody>
         <tr>
             <th scope="row" width="50%" class="table-light">AME License No.</th>

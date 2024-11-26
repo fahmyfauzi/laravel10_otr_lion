@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AmeLicense;
-use App\Models\AuthorizeLaca;
 use App\Models\BasicLicense;
 use App\Models\LionAirAirCraftType;
-use App\Models\MandatoryTraining;
 use App\Models\OtrApplication;
 use App\Models\Personnel;
 use App\Models\RatingTraining;
@@ -58,7 +56,7 @@ class EngineerController extends Controller
 
         // validate type of rating training
         $typeOfRatingTrainingValidated = $request->validate([
-            'type_of_rating_training' => 'required|array|min:1',
+            'type_of_rating_training' => 'required|array|min:1|max:5',
             'type_of_rating_training.*.course' => 'required|string|max:255',
             'type_of_rating_training.*.year' => 'required|integer|digits:4|min:1900|max:' . date('Y'),
         ], [
@@ -75,7 +73,7 @@ class EngineerController extends Controller
 
         // validate basic license
         $basicLicenseValidated = $request->validate([
-            'basic_license' => 'required|array|min:1', // Validasi bahwa field ini adalah array dan minimal ada 1 item
+            'basic_license' => 'required|array|min:1|max:5', // Validasi bahwa field ini adalah array dan minimal ada 1 item
             'basic_license.*.category' => 'required|string|max:255', // Validasi untuk setiap "category"
             'basic_license.*.card_no' => 'required|string|max:255', // Validasi untuk setiap "card_no"
         ], [
@@ -96,8 +94,8 @@ class EngineerController extends Controller
 
         // validate lion air aircraft type
         $lionAirAircraftTypeValidated = $request->validate([
-            'lion_air_aircraft_type' => 'required|array|min:1', // Validasi array dan minimal 1 item
-            'lion_air_aircraft_type.*.air_craft_type' => 'required|string|max:255', // Validasi setiap field "type" dalam array
+            'lion_air_aircraft_type' => 'required|array|min:1|max:5',
+            'lion_air_aircraft_type.*.air_craft_type' => 'required|string|max:255',
         ], [
             'lion_air_aircraft_type.required' => 'At least one aircraft type is required.',
             'lion_air_aircraft_type.*.type.required' => 'Type is required for each aircraft.',
@@ -208,7 +206,7 @@ class EngineerController extends Controller
         $filename = 'OTR-' . $submission->personnel->name . '.pdf';
 
         // Unduh PDF atau tampilkan langsung di browser
-        return $pdf->stream('partials.pdf');
-        // return $pdf->download($filename);
+        // return $pdf->stream('partials.pdf');
+        return $pdf->download($filename);
     }
 }

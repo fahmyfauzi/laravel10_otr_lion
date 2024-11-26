@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/login', function () {
     return view('auth.login');
-})->name('login');
+})->name('login')->middleware('guest');
 
 // role applicant
 Route::middleware(['auth', 'role:applicant'])->prefix('/applicant')->group(function () {
@@ -50,4 +50,7 @@ Route::middleware(['auth', 'role:quality_inspector'])->prefix('/quality-inspecto
     Route::get('/assessment/{id}/create', [QualityInspectorController::class, 'create'])->name('quality-inspector.create');
 
     Route::post('/assessment/{id}', [QualityInspectorController::class, 'store'])->name('quality-inspector.store');
+
+    // download pdf
+    Route::get('/submission/{id}/pdf', [EngineerController::class, 'downloadPdf'])->name('quality-inspector.pdf');
 });

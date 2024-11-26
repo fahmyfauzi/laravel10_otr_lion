@@ -6,6 +6,7 @@ use App\Models\Assessment;
 use App\Models\AuthorizeLaca;
 use App\Models\MandatoryTraining;
 use App\Models\OtrApplication;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -297,5 +298,22 @@ class QualityInspectorController extends Controller
             Log::error($e->getMessage());
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    public function downloadPdf(string $id)
+    {
+        $submission = OtrApplication::WithAllRelations()->findOrFail($id);
+
+        // Render view ke PDF
+        $pdf = Pdf::loadView('partials.pdf', [
+            'submission' => $submission
+        ])->setPaper('A4', 'portrait');
+
+        // set name pdf
+        $filename = 'OTR-' . $submission->personnel->name . '.pdf';
+
+        // Unduh PDF atau tampilkan langsung di browser
+        // return $pdf->stream('partials.pdf');
+        return $pdf->download($filename);
     }
 }

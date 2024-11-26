@@ -405,54 +405,17 @@
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    imagePreview.src = e.target.result; // Set image source to preview
-                    imagePreview.classList.remove('d-none'); // Show the image preview
-                    placeholderText.classList.add('d-none'); // Hide the placeholder text
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('d-none');
+                    placeholderText.classList.add('d-none');
                 };
 
-                reader.readAsDataURL(file); // Read the file as a data URL
+                // Read the file as a data URL
+                reader.readAsDataURL(file);
             } else {
                 imagePreview.src = '#';
-                imagePreview.classList.add('d-none'); // Hide the image preview
-                placeholderText.classList.remove('d-none'); // Show the placeholder text
-            }
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const checkboxes = document.querySelectorAll(".form-check-input");
-
-            // Mapping antara checkbox ID dengan elemen yang akan ditampilkan
-            const mappings = {
-                "rii": "rii_training",
-                "etops": "etops_training",
-            };
-
-            // Menambahkan event listener pada setiap checkbox
-            checkboxes.forEach((checkbox) => {
-                checkbox.addEventListener("change", function() {
-                    const fieldId = mappings[this.id];
-
-                    if (fieldId) {
-                        const field = document.getElementById(fieldId).closest(".row");
-
-                        // Tampilkan atau sembunyikan field berdasarkan checkbox status
-                        if (this.checked) {
-                            field.style.display = "flex";
-                        } else {
-                            field.style.display = "none";
-                        }
-                    }
-                });
-            });
-
-            // Menyembunyikan semua elemen terkait pada awal
-            for (const fieldId in mappings) {
-                const field = document.getElementById(mappings[fieldId]).closest(".row");
-                if (field) {
-                    field.style.display = "none";
-                }
+                imagePreview.classList.add('d-none');
+                placeholderText.classList.remove('d-none');
             }
         });
     </script>

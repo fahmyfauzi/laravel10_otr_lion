@@ -49,6 +49,7 @@
                         <td>
                             <a href="{{ route('quality-inspector.show', $history->id) }}"
                                 class="btn btn-sm btn-outline-secondary">View</a>
+
                             @if ($history->assessment)
                                 <a href="{{ route('quality-inspector.edit', $history->id) }}"
                                     class="btn btn-sm btn-outline-secondary">Update</a>
@@ -58,6 +59,8 @@
                                 <a href="{{ route('quality-inspector.create', $history->id) }}"
                                     class="btn btn-sm btn-outline-secondary">Assessment</a>
                             @endif
+                            <a href="{{ route('quality-inspector.pdf', $history->id) }}"
+                                class="btn btn-sm btn-outline-secondary">Download PDF</a>
                         </td>
                     </tr>
                 @empty

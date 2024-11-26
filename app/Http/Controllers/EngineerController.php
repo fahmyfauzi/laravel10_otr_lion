@@ -56,7 +56,7 @@ class EngineerController extends Controller
 
         // validate type of rating training
         $typeOfRatingTrainingValidated = $request->validate([
-            'type_of_rating_training' => 'required|array|min:1|max:5',
+            'type_of_rating_training' => 'required|array|min:1',
             'type_of_rating_training.*.course' => 'required|string|max:255',
             'type_of_rating_training.*.year' => 'required|integer|digits:4|min:1900|max:' . date('Y'),
         ], [
@@ -68,14 +68,14 @@ class EngineerController extends Controller
             'type_of_rating_training.*.year.integer' => 'Year must be a valid number.',
             'type_of_rating_training.*.year.digits' => 'Year must be a 4-digit number.',
             'type_of_rating_training.*.year.min' => 'Year cannot be earlier than 1900.',
-            'type_of_rating_training.*.year.max' => 'Year cannot be in the future.',
+
         ]);
 
         // validate basic license
         $basicLicenseValidated = $request->validate([
-            'basic_license' => 'required|array|min:1|max:5', // Validasi bahwa field ini adalah array dan minimal ada 1 item
-            'basic_license.*.category' => 'required|string|max:255', // Validasi untuk setiap "category"
-            'basic_license.*.card_no' => 'required|string|max:255', // Validasi untuk setiap "card_no"
+            'basic_license' => 'required|array|min:1',
+            'basic_license.*.category' => 'required|string|max:255',
+            'basic_license.*.card_no' => 'required|string|max:255',
         ], [
             'basic_license.required' => 'At least one basic license record is required.',
             'basic_license.*.category.required' => 'Category is required for each basic license.',
@@ -83,7 +83,7 @@ class EngineerController extends Controller
             'basic_license.*.category.max' => 'Category cannot exceed 255 characters.',
             'basic_license.*.card_no.required' => 'Card No. is required for each basic license.',
             'basic_license.*.card_no.string' => 'Card No. must be a valid string.',
-            'basic_license.*.card_no.max' => 'Card No. cannot exceed 255 characters.',
+
         ]);
 
         // validate AME License
@@ -94,13 +94,13 @@ class EngineerController extends Controller
 
         // validate lion air aircraft type
         $lionAirAircraftTypeValidated = $request->validate([
-            'lion_air_aircraft_type' => 'required|array|min:1|max:5',
+            'lion_air_aircraft_type' => 'required|array|min:1',
             'lion_air_aircraft_type.*.air_craft_type' => 'required|string|max:255',
         ], [
             'lion_air_aircraft_type.required' => 'At least one aircraft type is required.',
             'lion_air_aircraft_type.*.type.required' => 'Type is required for each aircraft.',
             'lion_air_aircraft_type.*.type.string' => 'Type must be a valid string.',
-            'lion_air_aircraft_type.*.type.max' => 'Type cannot exceed 255 characters.',
+
         ]);
 
         DB::beginTransaction();

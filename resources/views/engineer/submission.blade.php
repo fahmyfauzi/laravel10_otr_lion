@@ -357,31 +357,59 @@
     <!-- repeater -->
     <script src="{{ asset('assets/js/jquery-repeater.js') }}"></script>
     <script>
-        $('.repeater').repeater({
-            initEmpty: false,
+        $(document).ready(function() {
+            const maxItems = 6; // Maksimal 6 item
 
-
-            defaultValues: {
-                'text-input': ''
-            },
-
-            show: function() {
-                // Cek jumlah item saat ini
-                const maxItems = 7; // Maksimal 6 item
-                const currentItems = $(this).closest('.repeater').find('[data-repeater-item]')
-                    .length;
-
-                if (currentItems < maxItems) {
+            // Inisialisasi jQuery Repeater
+            $('.repeater').repeater({
+                initEmpty: false,
+                defaultValues: {
+                    'text-input': ''
+                },
+                show: function() {
                     $(this).slideDown();
-                } else {
-                    alert('You can only add up to 6 items.');
+                    updateAddButtonState($(this).closest(
+                        '.repeater')); // Update tombol Add setelah item ditampilkan
+                },
+                isFirstItemUndeletable: true, // Item pertama tidak bisa dihapus (opsional)
+                hide: function(deleteElement) {
+                    $(this).slideUp(deleteElement);
+                    updateAddButtonState($(this).closest(
+                        '.repeater')); // Update tombol Add saat item dihapus
                 }
+            });
 
-            },
-            isFirstItemUndeletable: true,
-            hide: function(deleteElement) {
-                $(this).slideUp(deleteElement);
+            // Fungsi untuk mengupdate status tombol Add
+            function updateAddButtonState(repeater) {
+                const addButton = repeater.find('[data-repeater-create]');
+                const currentItems = repeater.find('[data-repeater-item]').length;
+
+                // Jika jumlah item mencapai batas maksimum, sembunyikan tombol Add
+                if (currentItems >= maxItems) {
+                    addButton.addClass('d-none');
+                } else {
+                    addButton.removeClass('d-none');
+                }
             }
+
+            // Mencegah penambahan item jika sudah mencapai jumlah maksimum
+            $(document).on('click', '[data-repeater-create]', function(e) {
+                const repeater = $(this).closest('.repeater');
+                const currentItems = repeater.find('[data-repeater-item]').length;
+
+                if (currentItems >= maxItems) {
+                    e.preventDefault(); // Mencegah item ditambahkan jika sudah mencapai jumlah maksimum
+
+                } else {
+                    // Update tombol Add jika item ditambahkan
+                    updateAddButtonState(repeater);
+                }
+            });
+
+            // Update status tombol Add saat halaman dimuat
+            $('.repeater').each(function() {
+                updateAddButtonState($(this));
+            });
         });
     </script>
 

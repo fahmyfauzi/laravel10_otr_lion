@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            font-size: 9px;
+            font-size: 8px;
         }
 
         ul {
@@ -24,7 +24,7 @@
             <tr>
                 <td style="width:33%">
                     <img src="{{ public_path('assets/images/logo-lion-air.png') }}" alt="Logo Lion Air"
-                        style="width: 210px;" />
+                        style="width: 200px;" />
                 </td>
                 <td>
                     <div style="margin-bottom: 40px;">
@@ -540,21 +540,31 @@
                             and to distribute of
                             these listed:
                             <ul class="assessment-list" style="padding-left: 105px; ">
-                                <li style="margin-bottom: 5px">- Preflight / Transit / Daily</li>
-                                <li style="margin-bottom: 5px">- AD / SB</li>
-                                <li style="margin-bottom: 5px">- AFML, DMI, DBC, NSRDI</li>
-                                <li style="margin-bottom: 5px">- Chronologies Report, AOG and SS Declaration</li>
+                                <li style="margin-top: 15px">- Preflight / Transit / Daily</li>
+                                <li style="margin-top: 10px">- AD / SB</li>
+                                <li style="margin-top: 10px">- AFML, DMI, DBC, NSRDI</li>
+                                <li style="margin-top: 8px">- Chronologies Report, AOG and SS
+                                    Declaration</li>
                             </ul>
                         </td>
                         <td style="text-align: center; padding-top: 16px">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_6 }} %"
-                                style="display: block;">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_7 }} %"
-                                style="display: block">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_8 }} %"
-                                style="display: block">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_9 }} %"
-                                style="display: block">
+                            <div>
+                                <input type="text"
+                                    value=" {{ $submission->assessment->assessment_material_6 }} %">
+                            </div>
+                            <div>
+                                <input type="text"
+                                    value=" {{ $submission->assessment->assessment_material_7 }} %">
+                            </div>
+                            <div>
+                                <input type="text"
+                                    value=" {{ $submission->assessment->assessment_material_8 }} %">
+                            </div>
+                            <div>
+                                <input type="text"
+                                    value=" {{ $submission->assessment->assessment_material_9 }} %">
+                            </div>
+
                         </td>
                     </tr>
                     <tr style="border:1px solid black;">

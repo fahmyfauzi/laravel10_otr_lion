@@ -29,6 +29,8 @@ Route::get('/login', function () {
 Route::middleware(['auth', 'role:applicant'])->prefix('/applicant')->group(function () {
     // submission
     Route::resource('/submission', EngineerController::class)->except(['destroy']);
+
+    Route::get('/submission/{id}/pdf', [EngineerController::class, 'downloadPdf'])->name('submission.pdf');
 });
 
 // role pic coordinator

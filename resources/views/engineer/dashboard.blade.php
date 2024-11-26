@@ -58,7 +58,8 @@
                         <td>
                             <a href="{{ route('submission.show', $history->id) }}"
                                 class="btn btn-sm btn-outline-secondary">View</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Download</a>
+                            <a href="{{ route('submission.pdf', $history->id) }}"
+                                class="btn btn-sm btn-outline-secondary">Download</a>
                         </td>
                     </tr>
                 @empty

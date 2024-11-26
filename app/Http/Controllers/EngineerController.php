@@ -10,7 +10,9 @@ use App\Models\MandatoryTraining;
 use App\Models\OtrApplication;
 use App\Models\Personnel;
 use App\Models\RatingTraining;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -193,19 +195,20 @@ class EngineerController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function downloadPdf(string $id)
     {
-        //
-    }
+        $submission = OtrApplication::WithAllRelations()->findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Render view ke PDF
+        $pdf = Pdf::loadView('partials.pdf', [
+            'submission' => $submission
+        ])->setPaper('A4', 'portrait');
+
+        // set name pdf
+        $filename = 'OTR-' . $submission->personnel->name . '.pdf';
+
+        // Unduh PDF atau tampilkan langsung di browser
+        // return $pdf->stream('partials.pdf');
+        return $pdf->download($filename);
     }
 }

@@ -25,6 +25,9 @@ return new class extends Migration
             $table->integer('assessment_material_7')->nullable();
             $table->integer('assessment_material_8')->nullable();
             $table->integer('assessment_material_9')->nullable();
+            $table->integer('assessment_material_10')->nullable();
+            $table->integer('assessment_material_11')->nullable();
+            $table->integer('assessment_material_12')->nullable();
             $table->decimal('assessment_result', 5, 2)->nullable();
             $table->enum('status', ['pass', 'fail'])->nullable();
             $table->timestamp('asessed_at')->nullable();

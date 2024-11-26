@@ -208,7 +208,7 @@ class EngineerController extends Controller
         $filename = 'OTR-' . $submission->personnel->name . '.pdf';
 
         // Unduh PDF atau tampilkan langsung di browser
-        // return $pdf->stream('partials.pdf');
-        return $pdf->download($filename);
+        return $pdf->stream('partials.pdf');
+        // return $pdf->download($filename);
     }
 }

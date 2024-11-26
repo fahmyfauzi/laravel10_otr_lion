@@ -90,7 +90,18 @@
                     </label>
                 </td>
                 <td width="20%" class="text-center">
-                    {{ $submission->assessment->assessment_material_6 ?? '-' }} %
+                    <span class="d-block mt-3" class="mt-2">
+                        {{ $submission->assessment->assessment_material_6 ?? '-' }} %
+                    </span>
+                    <span class="d-block">
+                        {{ $submission->assessment->assessment_material_7 ?? '-' }} %
+                    </span>
+                    <span class="d-block">
+                        {{ $submission->assessment->assessment_material_8 ?? '-' }} %
+                    </span>
+                    <span class="d-block">
+                        {{ $submission->assessment->assessment_material_9 ?? '-' }} %
+                    </span>
                 </td>
             </tr>
 
@@ -103,7 +114,7 @@
                     </label>
                 </td>
                 <td width="20%" class="text-center">
-                    {{ $submission->assessment->assessment_material_7 ?? '-' }} %
+                    {{ $submission->assessment->assessment_material_10 ?? '-' }} %
                 </td>
             </tr>
 
@@ -116,7 +127,7 @@
                     </label>
                 </td>
                 <td width="20%" class="text-center">
-                    {{ $submission->assessment->assessment_material_8 ?? '-' }} %
+                    {{ $submission->assessment->assessment_material_11 ?? '-' }} %
                 </td>
             </tr>
 
@@ -131,7 +142,7 @@
                     </label>
                 </td>
                 <td width="20%" class="text-center">
-                    {{ $submission->assessment->assessment_material_9 ?? '-' }} %
+                    {{ $submission->assessment->assessment_material_12 ?? '-' }} %
                 </td>
             </tr>
 

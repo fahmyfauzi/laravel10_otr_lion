@@ -63,6 +63,9 @@ class QualityInspectorController extends Controller
             'assessment_material_7' => 'required|numeric|min:0|max:100',
             'assessment_material_8' => 'required|numeric|min:0|max:100',
             'assessment_material_9' => 'required|numeric|min:0|max:100',
+            'assessment_material_10' => 'required|numeric|min:0|max:100',
+            'assessment_material_11' => 'required|numeric|min:0|max:100',
+            'assessment_material_12' => 'required|numeric|min:0|max:100',
         ]);
 
         $authorizationLacaValidated = $request->validate([
@@ -97,6 +100,9 @@ class QualityInspectorController extends Controller
             $request->assessment_material_7,
             $request->assessment_material_8,
             $request->assessment_material_9,
+            $request->assessment_material_10,
+            $request->assessment_material_11,
+            $request->assessment_material_12,
         ];
 
         // Hitung hasil assessment
@@ -143,6 +149,9 @@ class QualityInspectorController extends Controller
                 'assessment_material_7' => $request->assessment_material_7,
                 'assessment_material_8' => $request->assessment_material_8,
                 'assessment_material_9' => $request->assessment_material_9,
+                'assessment_material_10' => $request->assessment_material_10,
+                'assessment_material_11' => $request->assessment_material_11,
+                'assessment_material_12' => $request->assessment_material_12,
                 'assessment_result' => $assessmentResult,
                 'status' => $status,
                 'asessed_at' => now()
@@ -182,6 +191,9 @@ class QualityInspectorController extends Controller
             'assessment_material_7' => 'required|numeric|min:0|max:100',
             'assessment_material_8' => 'required|numeric|min:0|max:100',
             'assessment_material_9' => 'required|numeric|min:0|max:100',
+            'assessment_material_10' => 'required|numeric|min:0|max:100',
+            'assessment_material_11' => 'required|numeric|min:0|max:100',
+            'assessment_material_12' => 'required|numeric|min:0|max:100',
         ]);
 
         $authorizationLacaValidated = $request->validate([
@@ -214,6 +226,9 @@ class QualityInspectorController extends Controller
             $request->assessment_material_7,
             $request->assessment_material_8,
             $request->assessment_material_9,
+            $request->assessment_material_10,
+            $request->assessment_material_11,
+            $request->assessment_material_12,
         ];
 
         $totalMaterial = count($materials);
@@ -266,6 +281,9 @@ class QualityInspectorController extends Controller
                 'assessment_material_7' => $request->assessment_material_7,
                 'assessment_material_8' => $request->assessment_material_8,
                 'assessment_material_9' => $request->assessment_material_9,
+                'assessment_material_10' => $request->assessment_material_10,
+                'assessment_material_11' => $request->assessment_material_11,
+                'assessment_material_12' => $request->assessment_material_12,
                 'assessment_result' => $assessmentResult,
                 'status' => $status,
                 'asessed_at' => now(),

@@ -417,45 +417,93 @@
             @endcomponent
 
 
-            <!-- material 6 -->
-            @component('components.assessment-material', [
-                'index' => 6,
-                'name' => 'assessment_material_6',
-                'label' => 'The understanding of how to fill and to distribute of these listed:
-                                                                                                                                                                                                                <ul class="assessment-list">
-                                                                                                                                                                                                                    <li>Preflight / Transit / Daily</li>
-                                                                                                                                                                                                                    <li>AD / SB</li>
-                                                                                                                                                                                                                    <li>AFML, DMI, DBC, NSRDI</li>
-                                                                                                                                                                                                                    <li>Chronologies Report, AOG and SS Declaration</li>
-                                                                                                                                                                                                                </ul>',
-                'value' => old('assessment_material_6', $submission->assessment->assessment_material_6 ?? ''),
-            ])
-            @endcomponent
+            <!-- material 6, 7, 8 , 9 -->
+            <tr>
+                <td>6</td>
+                <td>
+                    The understanding of how to fill and to distribute of these listed:
+                    <ul class="assessment-list">
+                        <li> <label for="assessment_material_6" class="form-label"> Preflight / Transit / Daily
+                            </label></li>
+                        <li> <label for="assessment_material_7" class="form-label"> AD / SB </label></li>
+                        <li> <label for="assessment_material_8" class="form-label"> AFML, DMI, DBC, NSRDI </label>
+                        </li>
+                        <li> <label for="assessment_material_6" class="form-label"> Chronologies Report, AOG and SS
+                                Declaration </label></li>
+                    </ul>
+                </td>
+                <td width="20%" class="pt-4">
+                    <div class="input-group  input-group-sm mb-1">
+                        <input type="number"
+                            class="form-control value-assessment @error('assessment_material_6') is-invalid @enderror"
+                            name="assessment_material_6" id="assessment_material_6"
+                            value="{{ old('assessment_material_6', $submission->assessment->assessment_material_6 ?? '') }}">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    @error('assessment_material_6')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                    <div class="input-group  input-group-sm mb-1">
+                        <input type="number"
+                            class="form-control value-assessment @error('assessment_material_7') is-invalid @enderror"
+                            name="assessment_material_7" id="assessment_material_7"
+                            value="{{ old('assessment_material_7', $submission->assessment->assessment_material_7 ?? '') }}">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    @error('assessment_material_7')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                    <div class="input-group  input-group-sm mb-1">
+                        <input type="number"
+                            class="form-control value-assessment @error('assessment_material_8') is-invalid @enderror"
+                            name="assessment_material_8" id="assessment_material_8"
+                            value="{{ old('assessment_material_8', $submission->assessment->assessment_material_8 ?? '') }}">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    @error('assessment_material_8')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                    <div class="input-group  input-group-sm mb-1">
+                        <input type="number"
+                            class="form-control value-assessment @error('assessment_material_9') is-invalid @enderror"
+                            name="assessment_material_9" id="assessment_material_9"
+                            value="{{ old('assessment_material_9', $submission->assessment->assessment_material_9 ?? '') }}">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    @error('assessment_material_9')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </td>
+            </tr>
+
 
             <!-- material 7 -->
             @component('components.assessment-material', [
                 'index' => 7,
-                'name' => 'assessment_material_7',
+                'name' => 'assessment_material_10',
                 'label' => 'The understanding of Airframe, Engine, Aircraft system',
-                'value' => old('assessment_material_7', $submission->assessment->assessment_material_7 ?? ''),
+                'value' => old('assessment_material_10', $submission->assessment->assessment_material_10 ?? ''),
             ])
             @endcomponent
 
             <!-- material 8 -->
             @component('components.assessment-material', [
                 'index' => 8,
-                'name' => 'assessment_material_8',
+                'name' => 'assessment_material_11',
                 'label' => 'The understanding of Electronics, Instrument, Radio installed to the Aircraft type',
-                'value' => old('assessment_material_8', $submission->assessment->assessment_material_8 ?? ''),
+                'value' => old('assessment_material_11', $submission->assessment->assessment_material_11 ?? ''),
             ])
             @endcomponent
 
             <!-- material 9 -->
             @component('components.assessment-material', [
                 'index' => 9,
-                'name' => 'assessment_material_9',
+                'name' => 'assessment_material_12',
                 'label' => 'The understanding of how to perform troubleshooting on the Aircraft',
-                'value' => old('assessment_material_9', $submission->assessment->assessment_material_9 ?? ''),
+                'value' => old('assessment_material_12', $submission->assessment->assessment_material_12 ?? ''),
             ])
             @endcomponent
 
@@ -468,7 +516,7 @@
                     </label>
                 </td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group  input-group-sm mb-1">
                         <input type="text" class="form-control" name="total_result" id="total_result"
                             placeholder="Result" aria-label="Total Result" min="0" max="100" disabled
                             value="{{ old('total_result', $submission->assessment->assessment_result ?? '') }}">

@@ -535,17 +535,26 @@
                         <td style="text-align: center; vertical-align: top; border-right: 1px solid black">
                             6
                         </td>
-                        <td style="border-right: 1px solid black">The understanding of how to fill and to distribute of
+                        <td style="border-right: 1px solid black; vertical-align: top;">The understanding of how to
+                            fill
+                            and to distribute of
                             these listed:
-                            <ul class="assessment-list" style="padding-left: 20px; ">
-                                <li>- Preflight / Transit / Daily</li>
-                                <li>- AD / SB</li>
-                                <li>- AFML, DMI, DBC, NSRDI</li>
-                                <li>- Chronologies Report, AOG and SS Declaration</li>
+                            <ul class="assessment-list" style="padding-left: 105px; ">
+                                <li style="margin-bottom: 5px">- Preflight / Transit / Daily</li>
+                                <li style="margin-bottom: 5px">- AD / SB</li>
+                                <li style="margin-bottom: 5px">- AFML, DMI, DBC, NSRDI</li>
+                                <li style="margin-bottom: 5px">- Chronologies Report, AOG and SS Declaration</li>
                             </ul>
                         </td>
-                        <td style="text-align: center; ">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_6 }} %">
+                        <td style="text-align: center; padding-top: 16px">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_6 }} %"
+                                style="display: block;">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_7 }} %"
+                                style="display: block">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_8 }} %"
+                                style="display: block">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_9 }} %"
+                                style="display: block">
                         </td>
                     </tr>
                     <tr style="border:1px solid black;">
@@ -555,7 +564,7 @@
                         <td style="border-right: 1px solid black">The understanding of Airframe, Engine, Aircraft
                             system</td>
                         <td style="text-align: center">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_7 }} %">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_10 }} %">
                         </td>
                     </tr>
                     <tr style="border:1px solid black;">
@@ -565,7 +574,7 @@
                         <td style="border-right: 1px solid black">The understanding of Electronics, Instrument, Radio
                             installed to the Aircraft type </td>
                         <td style="text-align: center">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_8 }} %">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_11 }} %">
                         </td>
                     </tr>
                     <tr style="border:1px solid black;">
@@ -576,7 +585,7 @@
                             on the aircraft? And how is his/her
                             performance on conducting trouble shooting? </td>
                         <td style="text-align: center">
-                            <input type="text" value=" {{ $submission->assessment->assessment_material_8 }} %">
+                            <input type="text" value=" {{ $submission->assessment->assessment_material_12 }} %">
                         </td>
                     </tr>
                     <tr style="border:1px solid black;">

@@ -180,7 +180,7 @@ class EngineerController extends Controller
     {
         $submission = OtrApplication::WithAllRelations()->find($id);
 
-        return view('partials.show', [
+        return view('engineer.show', [
             'submission' => $submission
         ]);
     }

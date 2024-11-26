@@ -27,7 +27,7 @@ class PicController extends Controller
     {
         $submission = OtrApplication::WithAllRelations()->find($id);
 
-        return view('partials.show', [
+        return view('pic-coordinator.show', [
             'submission' => $submission
         ]);
     }

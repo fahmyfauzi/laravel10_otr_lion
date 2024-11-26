@@ -32,7 +32,7 @@ class QualityInspectorController extends Controller
     {
         $submission = OtrApplication::WithAllRelations()->find($id);
 
-        return view('partials.show', [
+        return view('quality-inspector.show', [
             'submission' => $submission
         ]);
     }
@@ -79,8 +79,10 @@ class QualityInspectorController extends Controller
             'human_factory' => 'required',
             'sms_training' => 'required',
             'rvsm_pbn_training' => 'required',
-            'etops_training' => 'nullable',
-            'rii_training' => 'nullable',
+            'etops_training' => 'nullable|required_if:etops,1|string|max:255',
+            'rii_training' => 'nullable|required_if:rii,1|string|max:255',
+        ], [
+            'required_if' => 'This field is required when :other is checked.',
         ]);
 
 
@@ -122,8 +124,8 @@ class QualityInspectorController extends Controller
                 'human_factory' => $request->human_factory,
                 'sms_training' => $request->sms_training,
                 'rvsm_pbn_training' => $request->rvsm_pbn_training,
-                'etops_training' => $request->has('etops_training') ? true : false,
-                'rii_training' => $request->has('rii_training') ? true : false,
+                'etops_training' => $request->has('etops') ? $request->input('etops_training', null) : null,
+                'rii_training' => $request->has('rii') ? $request->input('rii_training', null) : null,
             ]);
 
 
@@ -195,8 +197,10 @@ class QualityInspectorController extends Controller
             'human_factory' => 'required',
             'sms_training' => 'required',
             'rvsm_pbn_training' => 'required',
-            'etops_training' => 'nullable',
-            'rii_training' => 'nullable',
+            'etops_training' => 'nullable|required_if:etops,1|string|max:255',
+            'rii_training' => 'nullable|required_if:rii,1|string|max:255',
+        ], [
+            'required_if' => 'This field is required when :other is checked.',
         ]);
 
         // Hitung hasil assessment
@@ -244,8 +248,8 @@ class QualityInspectorController extends Controller
                 'human_factory' => $request->human_factory,
                 'sms_training' => $request->sms_training,
                 'rvsm_pbn_training' => $request->rvsm_pbn_training,
-                'etops_training' => $request->has('etops_training') ? true : false,
-                'rii_training' => $request->has('rii_training') ? true : false,
+                'etops_training' => $request->has('etops') ? $request->input('etops_training', null) : null,
+                'rii_training' => $request->has('rii') ? $request->input('rii_training', null) : null,
             ])->save();
 
             // Update data Assessment

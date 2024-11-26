@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <h2>Submission Histories</h2>
+    <h2>Submission List</h2>
     @if (session('success'))
         @component('components.alert', ['type' => 'success', 'message' => session('success')])
         @endcomponent
@@ -35,7 +35,8 @@
 
                         </td>
                         <td>
-                            <a href="{{ route('pic.show', $history->id) }}" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{{ route('pic.show', $history->id) }}"
+                                class="btn btn-sm btn-outline-secondary">{{ $history->pic_status ? 'View' : 'Assessment' }}</a>
                         </td>
                     </tr>
 

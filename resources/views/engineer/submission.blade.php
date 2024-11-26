@@ -25,7 +25,7 @@
                                 style="max-width: 100px; ">
 
                             <!-- Placeholder for No Image -->
-                            <span id="placeholderText">Click to upload an image</span>
+                            <span id="placeholderText" class="text-black">Click to upload an image</span>
 
                             <!-- File Input (Hidden) -->
                             <input class="form-control d-none" name="photo" type="file" id="formFile"
@@ -125,7 +125,7 @@
                 <div class="col-12">
                     <div class="row">
                         <!-- TYPE OF RATING TRAINING -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 ">
                             <h3 class="mb-4">Type of Rating Training</h3>
                             <!-- Repeater Section -->
                             <div class="repeater">
@@ -172,6 +172,7 @@
                                         <!-- End Item Template -->
                                     </div>
                                 </div>
+                                <span class="text-muted">maximum 6 Type of Rating Training</span>
 
                                 <!-- Add Button -->
                                 <div class="form-group mt-4">
@@ -233,6 +234,7 @@
                                     </div>
                                 </div>
 
+                                <span class="text-muted">maximum 6 Basic License</span>
                                 <!-- Add Button -->
                                 <div class="form-group mt-4">
                                     <button type="button" data-repeater-create
@@ -313,6 +315,7 @@
                                     </div>
                                 </div>
 
+                                <span class="text-muted">maximum 6 Lion Air Aircraft Type</span>
                                 <!-- Add Button -->
                                 <div class="form-group mt-4">
                                     <button type="button" data-repeater-create
